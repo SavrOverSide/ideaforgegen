@@ -42,7 +42,15 @@ FACTION_WORD = [("Орден", "Order"), ("Братство", "Brotherhood"), ("
 FACTION_OF = [("Серого Ветра", "of the Grey Wind"), ("Тихих Струн", "of Silent Strings"), ("Последнего Слова", "of the Last Word"),
               ("Ржавой Луны", "of the Rusted Moon"), ("Пустого Трона", "of the Empty Throne"), ("Стеклянной Степи", "of the Glass Steppe")]
 
-SYL = ["ka", "ra", "zu", "mir", "tal", "en", "or", "vy", "sha", "lek", "dar", "ni", "bo", "rus", "an", "el", "kai", "tor", "yul", "ix"]
+SYL = ["ka", "ra", "zu", "mir", "tal", "en", "or", "vy", "sha", "lek", "dar", "ni", "bo", "rus", "an", "el", "kai", "tor", "yul", "ix",
+       "sa", "ta", "mu", "bek", "gul", "nur", "ai", "dos", "ar", "say", "tem", "oy", "zhan", "kor", "ul", "ba", "lun", "mar", "vei", "dro"]
+
+from .tables_extra import EXTRA  # noqa: E402
+
+for _name, _table in (("GENRE", GENRE), ("SETTING", SETTING), ("MECHANIC", MECHANIC), ("TWIST", TWIST), ("ROLE", ROLE), ("TRAIT", TRAIT),
+                      ("SECRET", SECRET), ("GOAL", GOAL), ("METHOD", METHOD), ("FACTION_WORD", FACTION_WORD), ("FACTION_OF", FACTION_OF)):
+    _table.extend(tuple(e) for e in EXTRA[_name])
+
 
 
 def name() -> str:
