@@ -49,32 +49,45 @@ def name() -> str:
     return "".join(random.choice(SYL) for _ in range(random.randint(2, 3))).capitalize()
 
 
-def c(table, i):
-    return random.choice(table)[i]
+def pick(table):
+    return random.choice(table)
 
 
-def game(lang: str) -> str:
-    i = 0 if lang == "ru" else 1
-    if lang == "ru":
-        return (f"🎮 <b>{name()}</b>\nЖанр: {c(GENRE, i)}\nСеттинг: {c(SETTING, i)}\n"
-                f"Фишка: {c(MECHANIC, i)}\nПоворот: {c(TWIST, i)}")
-    return (f"🎮 <b>{name()}</b>\nGenre: {c(GENRE, i)}\nSetting: {c(SETTING, i)}\n"
-            f"Hook: {c(MECHANIC, i)}\nTwist: {c(TWIST, i)}")
+# Each generator returns ONE idea: a name and rows of (label, value-ru, value-en). The same idea
+# is then shown in either language (and in the channel post in both), so ru and en always match.
+def game() -> dict:
+    return {"kind": "game", "name": name(), "rows": [
+        (("Жанр", "Genre"), pick(GENRE)), (("Сеттинг", "Setting"), pick(SETTING)),
+        (("Фишка", "Hook"), pick(MECHANIC)), (("Поворот", "Twist"), pick(TWIST))]}
 
 
-def npc(lang: str) -> str:
-    i = 0 if lang == "ru" else 1
-    if lang == "ru":
-        return f"🧙 <b>{name()}</b>, {c(ROLE, i)}\nЧерта: {c(TRAIT, i)}\nСекрет: {c(SECRET, i)}"
-    return f"🧙 <b>{name()}</b>, {c(ROLE, i)}\nTrait: {c(TRAIT, i)}\nSecret: {c(SECRET, i)}"
+def npc() -> dict:
+    return {"kind": "npc", "name": name(), "rows": [
+        (("Роль", "Role"), pick(ROLE)), (("Черта", "Trait"), pick(TRAIT)), (("Секрет", "Secret"), pick(SECRET))]}
 
 
-def faction(lang: str) -> str:
-    i = 0 if lang == "ru" else 1
-    title = f"{c(FACTION_WORD, i)} {c(FACTION_OF, i)}"
-    if lang == "ru":
-        return f"⚔️ <b>{title}</b>\nЦель: {c(GOAL, i)}\nМетод: {c(METHOD, i)}\nЛидер: {name()}"
-    return f"⚔️ <b>{title}</b>\nGoal: {c(GOAL, i)}\nMethod: {c(METHOD, i)}\nLeader: {name()}"
+def faction() -> dict:
+    word, of, leader = pick(FACTION_WORD), pick(FACTION_OF), name()
+    return {"kind": "faction", "name": f"{word[0]} {of[0]}", "name_en": f"{word[1]} {of[1]}", "rows": [
+        (("Цель", "Goal"), pick(GOAL)), (("Метод", "Method"), pick(METHOD)), (("Лидер", "Leader"), (leader, leader))]}
 
 
 GENERATORS = {"game": game, "npc": npc, "faction": faction}
+ICONS = {"game": "🎮", "npc": "🧙", "faction": "⚔️"}
+KIND_TITLE = {"game": ("ИДЕЯ ИГРЫ", "GAME IDEA"), "npc": ("ПЕРСОНАЖ", "CHARACTER"), "faction": ("ФРАКЦИЯ", "FACTION")}
+
+
+def title_of(idea: dict, i: int) -> str:
+    return idea["name_en"] if i == 1 and "name_en" in idea else idea["name"]
+
+
+def text(idea: dict, lang: str) -> str:
+    """Caption / plain-text form of an idea in one language."""
+    i = 0 if lang == "ru" else 1
+    lines = [f"{ICONS[idea['kind']]} <b>{title_of(idea, i)}</b>"]
+    lines += [f"{label[i]}: {value[i]}" for label, value in idea["rows"]]
+    return "\n".join(lines)
+
+
+def text_both(idea: dict) -> str:
+    return f"{text(idea, 'ru')}\n\n—\n\n{text(idea, 'en')}"

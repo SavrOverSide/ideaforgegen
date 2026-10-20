@@ -1,12 +1,15 @@
 """Ideas bot: game ideas, NPCs and factions for devs and tabletop GMs. Extra generations are sold for Stars."""
+import asyncio
+
 from aiogram import F, Router
 from aiogram.filters import Command, CommandStart
-from aiogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, Message
+from aiogram.types import BufferedInputFile, CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 from common.config import lang_of
 from common.db import Store
 from common.stars import payments_router, send_invoice
-from .tables import GENERATORS
+from .card import render
+from .tables import GENERATORS, text
 
 FREE_PER_DAY = 5
 PRODUCTS = {"pack_50": 25, "premium_30": 149}  # payload -> Stars
@@ -72,7 +75,11 @@ async def generate(c: CallbackQuery):
     if not store.take(c.from_user.id, FREE_PER_DAY):
         await c.message.answer(T[lang]["limit"], reply_markup=shop(lang))
         return await c.answer()
-    await c.message.answer(GENERATORS[kind](lang), parse_mode="HTML", reply_markup=menu(lang))
+    idea = GENERATORS[kind]()
+    me = await c.bot.me()
+    data = await asyncio.to_thread(render, idea, me.username)
+    await c.message.answer_photo(BufferedInputFile(data, filename=f"{kind}.jpg"), caption=text(idea, lang),
+                                 parse_mode="HTML", reply_markup=menu(lang))
     await c.answer()
 
 
