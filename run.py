@@ -8,9 +8,11 @@ from aiogram.types import BufferedInputFile, InlineKeyboardButton, InlineKeyboar
 
 from common.config import env
 from common.daily import every_day
+from common.profile import setup_profile
 from common.growth import broadcast, promo, ref_link, share_url
 from ideas.bot import T, router, store
 from ideas.card import render
+from ideas.profile import COMMANDS, DESCRIPTION, SHORT
 from ideas.tables import GENERATORS, make, text, text_both
 
 
@@ -54,6 +56,7 @@ async def main() -> None:
     bot = Bot(env("BOT_TOKEN"))
     dp = Dispatcher()
     dp.include_router(router)
+    await setup_profile(bot, COMMANDS, DESCRIPTION, SHORT)
     await asyncio.gather(
         dp.start_polling(bot),
         every_day(env("POST_TIME", "19:00"), lambda: post_idea(bot)),

@@ -205,6 +205,18 @@ async def toggle_sub(m: Message, user) -> None:
     await m.answer(tr(user, "sub_on" if on else "sub_off"), reply_markup=menu(user))
 
 
+def _command_for(kind: str):
+    async def handler(m: Message):
+        store.ensure_user(m.from_user.id)
+        await send_idea(m, m.from_user, kind)
+    handler.__name__ = f"cmd_{kind}"
+    return handler
+
+
+for _kind in GENERATORS:  # /game /npc /faction /item /quest /place
+    router.message(Command(_kind))(_command_for(_kind))
+
+
 # ---- generation, saving ---------------------------------------------------------------------------
 @router.callback_query(F.data.startswith("g:"))
 async def generate(c: CallbackQuery):

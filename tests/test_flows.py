@@ -181,3 +181,21 @@ class DailyPost(unittest.IsolatedAsyncioTestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class Profile(unittest.IsolatedAsyncioTestCase):
+    async def test_menu_commands_are_real_and_kind_commands_generate(self):
+        from common.profile import setup_profile
+        from ideas.profile import COMMANDS, DESCRIPTION, SHORT
+        bot = Bot("x")
+        await setup_profile(bot, COMMANDS, DESCRIPTION, SHORT)
+        self.assertEqual({p[1] for p in bot.profile}, {None, "en", "ru"})
+        self.assertEqual({c for c, _ in COMMANDS["ru"]}, {c for c, _ in COMMANDS["en"]})
+        for c, _ in COMMANDS["ru"]:
+            m = harness.Message(harness.User(88), f"/{c}", Bot("x"))
+            self.assertIsNotNone(await ib.router.feed("message", m), c)
+        c = chat(8801)
+        for k in GENERATORS:
+            await c.say(f"/{k}")
+        self.assertEqual(len([x for x in c.log if x["kind"] == "photo"]), 5)  # 5 free, the 6th hit the paywall
+        self.assertEqual(c.last()["kind"], "text")
