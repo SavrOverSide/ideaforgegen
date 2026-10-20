@@ -80,9 +80,48 @@ def faction() -> dict:
         (("Цель", "Goal"), pick(GOAL)), (("Метод", "Method"), pick(METHOD)), (("Лидер", "Leader"), (leader, leader))]}
 
 
-GENERATORS = {"game": game, "npc": npc, "faction": faction}
-ICONS = {"game": "🎮", "npc": "🧙", "faction": "⚔️"}
-KIND_TITLE = {"game": ("ИДЕЯ ИГРЫ", "GAME IDEA"), "npc": ("ПЕРСОНАЖ", "CHARACTER"), "faction": ("ФРАКЦИЯ", "FACTION")}
+import json  # noqa: E402
+from pathlib import Path  # noqa: E402
+
+K = {k: [tuple(e) for e in v] for k, v in json.loads((Path(__file__).parent / "kinds.json").read_text("utf-8")).items()}
+
+
+def item() -> dict:
+    return {"kind": "item", "name": name(), "rows": [
+        (("Предмет", "Item"), pick(K["ITEM_TYPE"])), (("Сила", "Power"), pick(K["ITEM_POWER"])),
+        (("Цена", "Cost"), pick(K["ITEM_COST"])), (("Легенда", "Lore"), pick(K["ITEM_LORE"]))]}
+
+
+def quest() -> dict:
+    return {"kind": "quest", "name": name(), "rows": [
+        (("Заказчик", "Client"), pick(K["QUEST_CLIENT"])), (("Задание", "Task"), pick(K["QUEST_TASK"])),
+        (("Награда", "Reward"), pick(K["QUEST_REWARD"])), (("Поворот", "Twist"), pick(K["QUEST_TWIST"]))]}
+
+
+def place() -> dict:
+    return {"kind": "place", "name": name(), "rows": [
+        (("Место", "Place"), pick(K["PLACE_TYPE"])), (("Атмосфера", "Mood"), pick(K["PLACE_MOOD"])),
+        (("Тайна", "Secret"), pick(K["PLACE_SECRET"])), (("Опасность", "Danger"), pick(K["PLACE_DANGER"]))]}
+
+
+GENERATORS = {"game": game, "npc": npc, "faction": faction, "item": item, "quest": quest, "place": place}
+ICONS = {"game": "🎮", "npc": "🧙", "faction": "⚔️", "item": "🗡️", "quest": "📜", "place": "🏰"}
+KIND_TITLE = {"game": ("ИДЕЯ ИГРЫ", "GAME IDEA"), "npc": ("ПЕРСОНАЖ", "CHARACTER"), "faction": ("ФРАКЦИЯ", "FACTION"),
+              "item": ("АРТЕФАКТ", "ARTIFACT"), "quest": ("КВЕСТ", "QUEST"), "place": ("ЛОКАЦИЯ", "LOCATION")}
+
+
+def make(kind: str, seed: int = None):
+    """Builds an idea. The same (kind, seed) always gives the same idea, so a saved idea is just its seed."""
+    if seed is None:
+        seed = random.getrandbits(32)
+    state = random.getstate()
+    random.seed(seed)
+    try:
+        idea = GENERATORS[kind]()
+    finally:
+        random.setstate(state)
+    idea["seed"] = seed
+    return idea
 
 
 def title_of(idea: dict, i: int) -> str:

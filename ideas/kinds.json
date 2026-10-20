@@ -1,0 +1,1754 @@
+{
+ "ITEM_TYPE": [
+  [
+   "треснувший хрустальный компас",
+   "a cracked crystal compass"
+  ],
+  [
+   "домбра из костей степного волка",
+   "a dombra made of steppe wolf bones"
+  ],
+  [
+   "ржавый нейроразъём с чужой подписью",
+   "a rusty neural jack bearing someone else's signature"
+  ],
+  [
+   "шахматная фигура из чёрного льда",
+   "a chess piece of black ice"
+  ],
+  [
+   "кассета с записью последнего эха",
+   "a cassette holding the last echo"
+  ],
+  [
+   "нефритовый кастет мастера тихой школы",
+   "a jade knuckle-duster of a silent school's master"
+  ],
+  [
+   "словарь с вырванными словами",
+   "a dictionary with torn-out words"
+  ],
+  [
+   "одинокий стеклянный сапог",
+   "a lone glass boot"
+  ],
+  [
+   "плащ из выцветших флагов погибших государств",
+   "a cloak sewn from faded flags of dead states"
+  ],
+  [
+   "серверная стойка размером с шкатулку",
+   "a server rack the size of a jewellery box"
+  ],
+  [
+   "обугленная книга без обложки",
+   "a charred book with no cover"
+  ],
+  [
+   "волосяная верёвка с девятью узлами",
+   "a horsehair rope with nine knots"
+  ],
+  [
+   "зеркальце из разбитого экрана",
+   "a hand mirror cut from a shattered screen"
+  ],
+  [
+   "серебряная пиала с вечной трещиной",
+   "a silver bowl with an everlasting crack"
+  ],
+  [
+   "мёртвый смартфон последнего пророка",
+   "the dead smartphone of the last prophet"
+  ],
+  [
+   "бронзовый колокольчик без языка",
+   "a bronze bell without a clapper"
+  ],
+  [
+   "катана, выкованная в тишине",
+   "a katana forged in silence"
+  ],
+  [
+   "глиняная табличка с неоконченной грамматикой",
+   "a clay tablet with an unfinished grammar"
+  ],
+  [
+   "перо птицы, которую никто не видел",
+   "a feather from a bird no one has seen"
+  ],
+  [
+   "тряпичная кукла с процессором вместо сердца",
+   "a rag doll with a processor for a heart"
+  ],
+  [
+   "часы, идущие в обратную сторону",
+   "a watch that runs backwards"
+  ],
+  [
+   "ключ от двери, которую снесли",
+   "a key to a door that was demolished"
+  ],
+  [
+   "бурдюк, в котором плещется ночное небо",
+   "a wineskin sloshing with the night sky"
+  ],
+  [
+   "пластинка с голосом, которого не существует",
+   "a vinyl record with a voice that doesn't exist"
+  ],
+  [
+   "счёты из зубов обанкротившегося банкира",
+   "an abacus strung with a bankrupt banker's teeth"
+  ],
+  [
+   "колба с пойманной грозой",
+   "a flask with a captured thunderstorm"
+  ],
+  [
+   "перчатка из кожи списанного андроида",
+   "a glove of discarded android skin"
+  ],
+  [
+   "деревянная флешка, пахнущая лесом",
+   "a wooden flash drive that smells of forest"
+  ],
+  [
+   "безымянный лук без тетивы",
+   "a nameless bow with no string"
+  ],
+  [
+   "маска без прорезей для глаз",
+   "a mask with no eye holes"
+  ],
+  [
+   "телескоп, направленный внутрь",
+   "a telescope that points inward"
+  ],
+  [
+   "свёрнутая карта несуществующей страны",
+   "a rolled map of a country that does not exist"
+  ],
+  [
+   "веер с лезвиями из рисовой бумаги",
+   "a fan with blades of rice paper"
+  ],
+  [
+   "обручальное кольцо из метеоритного железа",
+   "a wedding ring of meteorite iron"
+  ],
+  [
+   "тёмные очки, сквозь которые видны долги",
+   "dark glasses that reveal debts"
+  ],
+  [
+   "урна с прахом любимой нейросети",
+   "an urn with the ashes of a beloved neural net"
+  ]
+ ],
+ "ITEM_POWER": [
+  [
+   "светится, когда рядом лгут",
+   "glows when someone nearby lies"
+  ],
+  [
+   "переводит любую речь, но только в стихи",
+   "translates any speech, but only into verse"
+  ],
+  [
+   "останавливает падающее на три удара сердца",
+   "halts anything falling for three heartbeats"
+  ],
+  [
+   "шепчет имена тех, кто скоро умрёт",
+   "whispers the names of those about to die"
+  ],
+  [
+   "превращает страх в тёплый ветер",
+   "turns fear into a warm wind"
+  ],
+  [
+   "открывает любой замок, кроме совести владельца",
+   "opens any lock except the owner's conscience"
+  ],
+  [
+   "заставляет электронику говорить правду",
+   "makes electronics tell the truth"
+  ],
+  [
+   "показывает дорогу туда, где тебя ждут",
+   "shows the way to where someone is waiting for you"
+  ],
+  [
+   "делает владельца незаметным для всех, кто его любит",
+   "makes its owner unnoticeable to everyone who loves them"
+  ],
+  [
+   "повторяет последнюю фразу в комнате задом наперёд",
+   "repeats the last sentence spoken in the room, backwards"
+  ],
+  [
+   "превращает удар в музыку",
+   "turns a blow into music"
+  ],
+  [
+   "ускоряет время только вокруг врагов",
+   "speeds up time around enemies only"
+  ],
+  [
+   "хранит один день, который можно прожить заново",
+   "keeps one day that can be lived again"
+  ],
+  [
+   "заставляет тени повиноваться",
+   "makes shadows obey"
+  ],
+  [
+   "взламывает чужие сны",
+   "hacks other people's dreams"
+  ],
+  [
+   "пьёт ложь и выдаёт её как мёд",
+   "drinks lies and gives them back as honey"
+  ],
+  [
+   "делает сказанное слово острее клинка",
+   "sharpens a spoken word beyond any blade"
+  ],
+  [
+   "направляет ветер степи куда нужно владельцу",
+   "bends the steppe wind wherever its owner wants"
+  ],
+  [
+   "вызывает дух предка на один совет",
+   "summons an ancestor's spirit for a single piece of advice"
+  ],
+  [
+   "переписывает прошлое на одну строчку",
+   "rewrites the past by a single line"
+  ],
+  [
+   "отвечает на любой вопрос, кроме нужного",
+   "answers any question except the one you need"
+  ],
+  [
+   "растворяет границу между дверью и стеной",
+   "dissolves the boundary between a door and a wall"
+  ],
+  [
+   "ломает любой алгоритм, который пытается предсказать владельца",
+   "breaks any algorithm that tries to predict its owner"
+  ],
+  [
+   "напоминает врагам, как они когда-то хотели жить",
+   "reminds enemies how they once wanted to live"
+  ],
+  [
+   "хранит бесконечный тихий вечер, где можно спрятаться",
+   "holds an endless quiet evening to hide in"
+  ],
+  [
+   "превращает серебро в песок, а песок в память",
+   "turns silver to sand and sand to memory"
+  ],
+  [
+   "одалживает владельцу чужой акцент и чужую храбрость",
+   "lends its owner a foreign accent and a foreign courage"
+  ],
+  [
+   "приравнивает один шаг к ста",
+   "makes one step worth a hundred"
+  ],
+  [
+   "слышит мысли машин",
+   "hears the thoughts of machines"
+  ],
+  [
+   "зажигает холодное пламя, которому не нужно топливо",
+   "lights a cold flame that needs no fuel"
+  ],
+  [
+   "учит языку, на котором говорит ближайший камень",
+   "teaches the tongue the nearest stone speaks"
+  ],
+  [
+   "возвращает каждый удар тому, кто его нанёс, с процентами",
+   "returns every blow to its sender, with interest"
+  ],
+  [
+   "отменяет одну смерть в год",
+   "cancels one death per year"
+  ],
+  [
+   "замедляет пули до скорости сомнения",
+   "slows bullets to the speed of doubt"
+  ],
+  [
+   "зажигает в толпе одно честное мнение",
+   "sparks one honest opinion in a crowd"
+  ],
+  [
+   "стирает владельца из всех реестров",
+   "erases its owner from every registry"
+  ]
+ ],
+ "ITEM_COST": [
+  [
+   "каждое использование стирает одно воспоминание",
+   "each use erases one memory"
+  ],
+  [
+   "забирает у владельца тень на сутки",
+   "takes the owner's shadow for a day"
+  ],
+  [
+   "требует, чтобы владелец соврал в ответ",
+   "demands that its owner tell a lie in return"
+  ],
+  [
+   "тихо превращает друзей в знакомых",
+   "quietly turns friends into acquaintances"
+  ],
+  [
+   "с каждым разом делает голос владельца тише",
+   "makes the owner's voice quieter every time"
+  ],
+  [
+   "пьёт сны, и владелец перестаёт их видеть",
+   "feeds on dreams until the owner stops dreaming"
+  ],
+  [
+   "привязывает владельца к месту первого применения",
+   "tethers the owner to the place where it was first used"
+  ],
+  [
+   "навсегда отнимает один вкус",
+   "takes away one taste forever"
+  ],
+  [
+   "крадёт у владельца по одному рассвету в месяц",
+   "steals one sunrise from the owner every month"
+  ],
+  [
+   "оставляет на коже отпечатки чужих пальцев",
+   "leaves a stranger's fingerprints on the owner's skin"
+  ],
+  [
+   "копит долг, который взыщут с потомков",
+   "builds up a debt to be collected from the owner's descendants"
+  ],
+  [
+   "насылает на владельца невыносимую честность на час",
+   "inflicts unbearable honesty on the owner for an hour"
+  ],
+  [
+   "ржавит весь металл в трёх шагах вокруг",
+   "rusts every bit of metal within three paces"
+  ],
+  [
+   "работает, только пока владелец голоден",
+   "works only while the owner is hungry"
+  ],
+  [
+   "зовёт того, кто давно ищет владельца",
+   "calls out to someone who has long been hunting its owner"
+  ],
+  [
+   "заставляет забыть одно слово родного языка",
+   "makes the owner forget one word of their mother tongue"
+  ],
+  [
+   "меняет местами левое и правое",
+   "swaps left and right"
+  ],
+  [
+   "каждый раз требует для владельца новое имя",
+   "demands a new name for the owner each time"
+  ],
+  [
+   "вытягивает тепло из рук",
+   "drains the warmth from the owner's hands"
+  ],
+  [
+   "отправляет неудачу к ближайшему человеку",
+   "sends bad luck to the nearest person"
+  ],
+  [
+   "прибавляет владельцу год за применение",
+   "adds a year to the owner's age per use"
+  ],
+  [
+   "требует в жертву любимую вещь",
+   "requires the sacrifice of a beloved possession"
+  ],
+  [
+   "лишает владельца способности смеяться над своими шутками",
+   "robs the owner of the ability to laugh at their own jokes"
+  ],
+  [
+   "застревает мелодией в голове на неделю",
+   "lodges a melody in the owner's head for a week"
+  ],
+  [
+   "делает владельца видимым для всех камер города",
+   "makes the owner visible to every camera in the city"
+  ],
+  [
+   "медленно превращает кровь в холодную воду",
+   "slowly turns the owner's blood to cold water"
+  ],
+  [
+   "выставляет счёт за каждую победу, всегда больше добычи",
+   "bills the owner for every victory, always for more than the spoils"
+  ],
+  [
+   "запоминает слабые места владельца и выдаёт их врагам",
+   "memorizes the owner's weak spots and tells them to enemies"
+  ],
+  [
+   "вынуждает бросить любимую привычку",
+   "forces the owner to abandon a cherished habit"
+  ],
+  [
+   "каждую ночь крадёт час сна",
+   "takes an hour of sleep every night"
+  ],
+  [
+   "рано или поздно требует передать себя другому",
+   "sooner or later insists on being handed to someone else"
+  ],
+  [
+   "наделяет владельца звоном, который слышат все, кроме него",
+   "gives the owner a ringing that everyone hears except them"
+  ],
+  [
+   "превращает ближайшую ценную вещь в камень",
+   "turns the nearest valuable thing to stone"
+  ],
+  [
+   "обращает любое питьё в простую воду",
+   "turns every drink into plain water"
+  ],
+  [
+   "тяжелеет с каждой ложью владельца",
+   "grows heavier with each of the owner's lies"
+  ],
+  [
+   "однажды потребует вернуть всё, что дало",
+   "will one day demand back everything it gave"
+  ]
+ ],
+ "ITEM_LORE": [
+  [
+   "отлили из последнего колокола павшего города",
+   "cast from the last bell of a fallen city"
+  ],
+  [
+   "по легенде, над этим три жизни трудился мастер, споривший со смертью",
+   "legend says a master who argued with death worked on this for three lifetimes"
+  ],
+  [
+   "нашли в брюхе кита, мёртвого посреди сухой степи",
+   "found in the belly of a whale that lay dead in the middle of a dry steppe"
+  ],
+  [
+   "выиграли в карты у бога, который жульничал",
+   "won at cards from a god who cheated"
+  ],
+  [
+   "эту вещь пять раз запрещали и пять раз изобретали заново",
+   "banned five times and reinvented five times"
+  ],
+  [
+   "собрали в подпольной лаборатории, где никто не знал, что строит",
+   "assembled in an underground lab where nobody knew what they were building"
+  ],
+  [
+   "передавали из рук в руки, и каждый владелец дописывал своё имя",
+   "passed from hand to hand, each owner adding their name"
+  ],
+  [
+   "за одну ночь вырезали монахи, давшие обет молчания",
+   "carved in a single night by monks sworn to silence"
+  ],
+  [
+   "вынесли из архива, который сгорел через минуту",
+   "carried out of an archive that burned a minute later"
+  ],
+  [
+   "говорят, ни один купец так и не смог это продать",
+   "they say no merchant has ever managed to sell this"
+  ],
+  [
+   "собрали из обломков корабля, упавшего с неба в степь",
+   "assembled from the wreck of a ship that fell from the sky onto the steppe"
+  ],
+  [
+   "заказал поэт-тиран, но получил совсем не то, чего хотел",
+   "ordered by a poet-tyrant who received something quite different from what he wanted"
+  ],
+  [
+   "нашли у ног памятника, чьё имя соскоблили",
+   "found at the feet of a statue whose name was scraped away"
+  ],
+  [
+   "есть слух, что это попало в наш мир по ошибке, как чужая почта",
+   "rumour has it this reached our world by mistake, like misdelivered mail"
+  ],
+  [
+   "пятьдесят лет хранили в банке с надписью «не открывать»",
+   "kept for fifty years in a jar labelled \"do not open\""
+  ],
+  [
+   "выменяли на последнюю песню умирающего языка",
+   "traded for the last song of a dying language"
+  ],
+  [
+   "настоящее имя этой вещи знает лишь тот, кто ею не пользовался",
+   "only someone who never used it knows its true name"
+  ],
+  [
+   "нашли в юрте старика, поклявшегося, что видит это впервые",
+   "found in the yurt of an old man who swore he had never seen it"
+  ],
+  [
+   "построили по чертежам, которые одной ночью приснились трём инженерам",
+   "built from blueprints that three engineers dreamed on the same night"
+  ],
+  [
+   "в хрониках это называют «ошибкой номер семь»",
+   "the chronicles call it \"mistake number seven\""
+  ],
+  [
+   "эту вещь когда-то держали рядом с троном, пока трон не исчез",
+   "this once sat beside a throne, until the throne vanished"
+  ],
+  [
+   "из-за неё дрались две армии, не помнившие причины войны",
+   "two armies fought over it without remembering why the war began"
+  ],
+  [
+   "выгравирован вопрос, на который нет ответа",
+   "engraved with a question that has no answer"
+  ],
+  [
+   "заказали в подарок на свадьбу, которой так и не случилось",
+   "ordered as a gift for a wedding that never happened"
+  ],
+  [
+   "учёный клялся, что это работает на чистой вере, и никто не смог доказать обратное",
+   "a scientist swore it runs on pure faith, and nobody could prove otherwise"
+  ],
+  [
+   "нашли в обломках концерта, который длился слишком долго",
+   "found in the wreckage of a concert that ran too long"
+  ],
+  [
+   "вырастили в лаборатории из одной клетки упрямства",
+   "grown in a lab from a single cell of stubbornness"
+  ],
+  [
+   "в каждом переводе легенды об этой вещи другая концовка",
+   "every translation of its legend has a different ending"
+  ],
+  [
+   "девять воров это украли, и ни один не разбогател",
+   "nine thieves stole it and none got rich"
+  ],
+  [
+   "оставил странник, который всегда шёл на запад и не вернулся",
+   "left behind by a wanderer who always walked west and never returned"
+  ],
+  [
+   "по преданию, сделано из слёз над проигранной партией в го",
+   "by tradition, made from tears shed over a lost game of go"
+  ],
+  [
+   "нейросеть сочинила легенду об этой вещи и сама в неё поверила",
+   "a neural net composed its legend and then believed it herself"
+  ],
+  [
+   "все прежние владельцы умерли в хорошем настроении",
+   "all its previous owners died in a good mood"
+  ],
+  [
+   "на алматинском базаре это оценили в три арбуза и одну тайну",
+   "a bazaar in Almaty priced this at three watermelons and one secret"
+  ],
+  [
+   "кузнец сковал это по ошибке, думая о другом",
+   "a smith made this by accident while thinking of something else"
+  ],
+  [
+   "никто не помнит, зачем это создали, но все помнят, почему спрятали",
+   "nobody remembers why it was made, but everyone remembers why it was hidden"
+  ]
+ ],
+ "QUEST_CLIENT": [
+  [
+   "слепой картограф",
+   "a blind cartographer"
+  ],
+  [
+   "усталый бог мелких дел",
+   "a weary god of small matters"
+  ],
+  [
+   "беглый ИИ из банковской системы",
+   "a runaway AI from a banking system"
+  ],
+  [
+   "вдова степного хана",
+   "the widow of a steppe khan"
+  ],
+  [
+   "мастер боевых искусств, потерявший всех учеников",
+   "a martial arts master who has lost all his students"
+  ],
+  [
+   "бродячий акын с одной струной",
+   "a wandering akyn with a single string"
+  ],
+  [
+   "торговец чужими снами",
+   "a dealer in other people's dreams"
+  ],
+  [
+   "последний носитель вымершего языка",
+   "the last speaker of an extinct language"
+  ],
+  [
+   "дрон-голубь на пенсии",
+   "a retired pigeon drone"
+  ],
+  [
+   "директор несуществующей корпорации",
+   "the director of a nonexistent corporation"
+  ],
+  [
+   "монахиня-хакер",
+   "a hacker nun"
+  ],
+  [
+   "мальчик, продавший свою тень",
+   "a boy who sold his shadow"
+  ],
+  [
+   "робот-могильщик, уставший от работы",
+   "a gravedigger robot tired of its job"
+  ],
+  [
+   "шахматный хастлер-нонконформист",
+   "a nonconformist chess hustler"
+  ],
+  [
+   "бывший палач, ставший поваром",
+   "a former executioner turned cook"
+  ],
+  [
+   "старуха, помнящая будущее",
+   "an old woman who remembers the future"
+  ],
+  [
+   "кочевник со звёздной картой на спине",
+   "a nomad with a star chart on his back"
+  ],
+  [
+   "лис-оборотень, ушедший на покой",
+   "a fox spirit in retirement"
+  ],
+  [
+   "физик, потерявший одну константу",
+   "a physicist who has lost a constant"
+  ],
+  [
+   "рок-музыкант, которого похоронили слишком рано",
+   "a rock musician buried too early"
+  ],
+  [
+   "двойник правителя",
+   "the ruler's body double"
+  ],
+  [
+   "библиотекарь запретной полки",
+   "the librarian of the forbidden shelf"
+  ],
+  [
+   "дух заброшенного завода",
+   "the spirit of an abandoned factory"
+  ],
+  [
+   "переводчик, ненавидящий слова",
+   "a translator who hates words"
+  ],
+  [
+   "самый честный вор города",
+   "the most honest thief in town"
+  ],
+  [
+   "девочка-курьер на электросамокате",
+   "a courier girl on an electric scooter"
+  ],
+  [
+   "аксакал, который всё знает и молчит",
+   "an elder who knows everything and says nothing"
+  ],
+  [
+   "голос из старого радиоприёмника",
+   "a voice in an old radio"
+  ],
+  [
+   "тренер по боям без правил, верящий в дзен",
+   "a cage-fight coach who believes in zen"
+  ],
+  [
+   "хирург, берущий органы в обмен на воспоминания",
+   "a surgeon who takes organs in exchange for memories"
+  ],
+  [
+   "смотритель маяка на сухой земле",
+   "a lighthouse keeper on dry land"
+  ],
+  [
+   "бухгалтер смерти",
+   "death's accountant"
+  ],
+  [
+   "дрон-садовник, вырастивший сомнение",
+   "a gardener drone that has grown a doubt"
+  ],
+  [
+   "бунтующая кофемашина",
+   "a rebellious coffee machine"
+  ],
+  [
+   "повар-алхимик из придорожной юрты",
+   "an alchemist cook from a roadside yurt"
+  ],
+  [
+   "монах, нарушивший обет ради единственного слова",
+   "a monk who broke his vow for a single word"
+  ]
+ ],
+ "QUEST_TASK": [
+  [
+   "доставить письмо в город, которого нет на картах",
+   "deliver a letter to a city that is not on any map"
+  ],
+  [
+   "найти того, кто украл эхо горного ущелья",
+   "find whoever stole the echo of a mountain gorge"
+  ],
+  [
+   "научить машину проигрывать с достоинством",
+   "teach a machine to lose with dignity"
+  ],
+  [
+   "переписать песню так, чтобы её нельзя было забыть",
+   "rewrite a song so it can never be forgotten"
+  ],
+  [
+   "пересечь пустыню, не оставив следов",
+   "cross a desert without leaving tracks"
+  ],
+  [
+   "выиграть спор у существа, не умеющего проигрывать",
+   "win an argument against a being that cannot lose"
+  ],
+  [
+   "украсть сон у спящего правителя",
+   "steal a dream from a sleeping ruler"
+  ],
+  [
+   "вернуть долг, о котором никто не помнит",
+   "repay a debt that nobody remembers"
+  ],
+  [
+   "сопроводить караван призраков до рассвета",
+   "escort a caravan of ghosts until dawn"
+  ],
+  [
+   "взломать архив, охраняемый поэтами",
+   "break into an archive guarded by poets"
+  ],
+  [
+   "договориться с ураганом",
+   "negotiate with a hurricane"
+  ],
+  [
+   "найти потерянную ноту в симфонии города",
+   "find the lost note in the city's symphony"
+  ],
+  [
+   "спрятать свидетеля так, чтобы он сам не смог себя найти",
+   "hide a witness so well that even they cannot find themselves"
+  ],
+  [
+   "победить в турнире, где нельзя драться",
+   "win a tournament where fighting is forbidden"
+  ],
+  [
+   "перевести слово, означающее «всё остальное»",
+   "translate a word that means \"everything else\""
+  ],
+  [
+   "починить часы, показывающие чужое время",
+   "repair a clock that shows someone else's time"
+  ],
+  [
+   "забрать посылку у отправителя, которого ещё нет на свете",
+   "collect a parcel from a sender who has not been born yet"
+  ],
+  [
+   "устроить свадьбу двух враждующих кланов без пролитой крови",
+   "stage a wedding between two feuding clans without spilling blood"
+  ],
+  [
+   "вырастить сад на крыше мёртвой станции",
+   "grow a garden on the roof of a dead station"
+  ],
+  [
+   "научить беспощадный алгоритм сомневаться",
+   "teach a ruthless algorithm to doubt"
+  ],
+  [
+   "сжечь книгу, не уничтожив написанное в ней",
+   "burn a book without destroying what it says"
+  ],
+  [
+   "найти человека, который на самом деле написал закон",
+   "find the person who actually wrote the law"
+  ],
+  [
+   "вывести старика из города, не пользуясь дорогами",
+   "lead an old man out of the city without using roads"
+  ],
+  [
+   "обменять своё имя на лучшее",
+   "swap your name for a better one"
+  ],
+  [
+   "записать звук тишины в центре мегаполиса",
+   "record the sound of silence in the heart of a megacity"
+  ],
+  [
+   "разбудить дух горы, не рассердив его",
+   "wake the spirit of a mountain without angering it"
+  ],
+  [
+   "пройти через ночной рынок и ничего не купить",
+   "walk through a night market and buy nothing"
+  ],
+  [
+   "уничтожить свою копию, которая лучше оригинала",
+   "destroy a copy of yourself that is better than the original"
+  ],
+  [
+   "доставить десять вёдер степного ветра в город без окон",
+   "deliver ten buckets of steppe wind to a city without windows"
+  ],
+  [
+   "выучить редкий диалект за одну ночь",
+   "learn a rare dialect in a single night"
+  ],
+  [
+   "проиграть партию в шахматы так, чтобы враг проиграл войну",
+   "lose a chess game so that the enemy loses a war"
+  ],
+  [
+   "найти хозяина для бездомной молнии",
+   "find an owner for a homeless lightning bolt"
+  ],
+  [
+   "принести лекарство от скуки в осаждённый город",
+   "bring a cure for boredom to a besieged city"
+  ],
+  [
+   "разыскать учителя, которого никто никогда не видел",
+   "track down a teacher no one has ever seen"
+  ],
+  [
+   "сыграть дуэт с музыкантом из другого измерения",
+   "play a duet with a musician from another dimension"
+  ],
+  [
+   "убедить толпу в том, во что не веришь сам",
+   "convince a crowd of something you don't believe yourself"
+  ]
+ ],
+ "QUEST_REWARD": [
+  [
+   "карта, которая показывает чужие желания",
+   "a map that shows other people's desires"
+  ],
+  [
+   "мешок серебра и один хороший совет",
+   "a sack of silver and one good piece of advice"
+  ],
+  [
+   "право один раз переписать закон",
+   "the right to rewrite one law, once"
+  ],
+  [
+   "ржавый меч с отличной репутацией",
+   "a rusty sword with an excellent reputation"
+  ],
+  [
+   "доступ к закрытому серверу богов",
+   "access to the gods' private server"
+  ],
+  [
+   "три желания, одно из которых уже потрачено",
+   "three wishes, one of which is already spent"
+  ],
+  [
+   "табун быстрых коней и долг благодарности",
+   "a herd of swift horses and a debt of gratitude"
+  ],
+  [
+   "билет в один конец на поезд, которого нет в расписании",
+   "a one-way ticket on a train missing from the timetable"
+  ],
+  [
+   "урок мастера, который никого не учил",
+   "a lesson from a master who has never taught"
+  ],
+  [
+   "чужое имя и безупречная биография",
+   "someone else's name and a spotless biography"
+  ],
+  [
+   "флакон тишины",
+   "a vial of silence"
+  ],
+  [
+   "акция компании, которой ещё не существует",
+   "a share in a company that doesn't exist yet"
+  ],
+  [
+   "пророческая рецензия на собственную жизнь",
+   "a prophetic review of your own life"
+  ],
+  [
+   "ключ от дома, где тебя всегда ждут",
+   "the key to a house where you are always expected"
+  ],
+  [
+   "нейроимплант с чёрным юмором",
+   "a neural implant with a dark sense of humour"
+  ],
+  [
+   "право назвать звезду именем врага",
+   "the right to name a star after an enemy"
+  ],
+  [
+   "шкура снежного барса и обещание не охотиться",
+   "a snow leopard pelt and a promise never to hunt"
+  ],
+  [
+   "билет на концерт группы, распавшейся до твоего рождения",
+   "a ticket to a concert by a band that split before you were born"
+  ],
+  [
+   "пожизненная подписка на утренние откровения",
+   "a lifetime subscription to morning revelations"
+  ],
+  [
+   "пустая книга, которая пишется сама",
+   "a blank book that writes itself"
+  ],
+  [
+   "горсть земли с исчезнувшей родины",
+   "a handful of soil from a vanished homeland"
+  ],
+  [
+   "бессмертие на выходные",
+   "immortality for the weekend"
+  ],
+  [
+   "справка о том, что ты никому ничего не должен",
+   "a certificate stating you owe nobody anything"
+  ],
+  [
+   "второй шанс в красивой коробке",
+   "a second chance in a pretty box"
+  ],
+  [
+   "учебник языка, на котором говорят только во сне",
+   "a textbook of a language spoken only in dreams"
+  ],
+  [
+   "право на последнее слово в любом споре",
+   "the right to the last word in any argument"
+  ],
+  [
+   "сундук, внутри которого сундук побольше",
+   "a chest containing a bigger chest"
+  ],
+  [
+   "имя на стене зала героев, написанное с ошибкой",
+   "a name on the wall of the hall of heroes, misspelled"
+  ],
+  [
+   "нож, который всегда возвращается домой",
+   "a knife that always finds its way home"
+  ],
+  [
+   "бесплатные похороны в любом городе мира",
+   "free funerals in any city in the world"
+  ],
+  [
+   "свиток с формулой идеального чая",
+   "a scroll with the formula for perfect tea"
+  ],
+  [
+   "дрон-телохранитель с комплексом неполноценности",
+   "a bodyguard drone with an inferiority complex"
+  ],
+  [
+   "голос лучшего певца, взятый напрокат",
+   "the voice of the finest singer, on loan"
+  ],
+  [
+   "пояс чемпиона несуществующей лиги",
+   "the champion's belt of a league that doesn't exist"
+  ],
+  [
+   "тёплое место у костра и все истории мира",
+   "a warm spot by the fire and all the stories of the world"
+  ],
+  [
+   "половина сокровища и целая карта проблем",
+   "half a treasure and a whole map of troubles"
+  ]
+ ],
+ "QUEST_TWIST": [
+  [
+   "заказчик давно мёртв, а нанимает вас его завещание",
+   "the client died long ago, and only a will is hiring you"
+  ],
+  [
+   "награда оказывается проклятой",
+   "the reward turns out to be cursed"
+  ],
+  [
+   "кто-то уже выполнил задание, но никто этого не помнит",
+   "someone has already done the task, but no one remembers"
+  ],
+  [
+   "за вами идёт соперник, лучший во всём, кроме удачи",
+   "a rival who is better at everything except luck is on your tail"
+  ],
+  [
+   "задание на самом деле экзамен, и экзаменатор уже недоволен",
+   "the task is actually an exam, and the examiner is already displeased"
+  ],
+  [
+   "чем ближе цель, тем меньше все помнят, зачем отправились в путь",
+   "the closer the goal, the less anyone remembers why they set out"
+  ],
+  [
+   "заказчик говорит правду, а всё остальное лжёт",
+   "the client speaks the truth while everything else lies"
+  ],
+  [
+   "вас с самого начала принимали за кого-то другого",
+   "from the start you were taken for someone else"
+  ],
+  [
+   "весь план подсказал дружелюбный голос в вашей голове",
+   "the whole plan was suggested by a friendly voice in your head"
+  ],
+  [
+   "награду уже получили ваши враги, досрочно",
+   "your enemies have already collected the reward, ahead of time"
+  ],
+  [
+   "выполнив задание, вы сделаете заказчика бессмертным",
+   "by finishing the task you make the client immortal"
+  ],
+  [
+   "в самый важный момент связь с заказчиком обрывается",
+   "at the crucial moment contact with the client is lost"
+  ],
+  [
+   "заказ подписан вашим собственным почерком",
+   "the order bears your own handwriting"
+  ],
+  [
+   "тот, ради кого всё затеяно, просит не вмешиваться",
+   "the one for whose sake it all began asks you to stay out of it"
+  ],
+  [
+   "каждый свидетель пересказывает события по-своему, и все правы",
+   "every witness retells events differently, and each is right"
+  ],
+  [
+   "за ночь меняется закон, и ваша работа становится преступлением",
+   "overnight the law changes and your errand becomes a crime"
+  ],
+  [
+   "половина команды шпионит, и для разных сторон",
+   "half the team are spies, each for a different side"
+  ],
+  [
+   "путь придётся пройти дважды, туда и обратно, и всё изменится",
+   "the journey must be made twice, there and back, and everything will have changed"
+  ],
+  [
+   "никакого заказчика не было: вы платили сами себе",
+   "there never was a client: you were paying yourself"
+  ],
+  [
+   "добрый старик, который вам помогает, главный подозреваемый",
+   "the kindly old man who helps you is the prime suspect"
+  ],
+  [
+   "награда достанется лишь тому, кто её не заслужил",
+   "the reward goes only to the one who doesn't deserve it"
+  ],
+  [
+   "заказчик платит не за результат, а за ваши ошибки",
+   "the client pays not for the result but for your mistakes"
+  ],
+  [
+   "кто-то снимает всё происходящее для чужого развлечения",
+   "someone is filming everything for other people's entertainment"
+  ],
+  [
+   "появляется второй заказчик с тем же заданием и вдвое большей наградой",
+   "a second client appears with the same task and double the reward"
+  ],
+  [
+   "выполнив задание, вы забываете всё, чему научились в пути",
+   "completing the task makes you forget everything you learned along the way"
+  ],
+  [
+   "дорога подталкивает вас к ошибкам, потому что ей скучно",
+   "the road keeps nudging you into mistakes because it is bored"
+  ],
+  [
+   "враг предлагает помощь и действительно помогает",
+   "the enemy offers help and actually helps"
+  ],
+  [
+   "срок сокращается каждый раз, когда вы сомневаетесь",
+   "the deadline shrinks every time you hesitate"
+  ],
+  [
+   "заказчик обманул не вас, а самого себя",
+   "the client has deceived not you but themselves"
+  ],
+  [
+   "по дороге выясняется, что мир проще, чем казалось, и это страшнее",
+   "along the way you find the world is simpler than it seemed, and that is worse"
+  ],
+  [
+   "всем остальным участникам платят больше",
+   "everyone else involved is paid more"
+  ],
+  [
+   "нужный человек уже уехал, оставив очень убедительную копию",
+   "the person you need already left, putting a very convincing copy in their place"
+  ],
+  [
+   "работу надо сделать, не нарушив ни одно из трёх противоречащих правил",
+   "the job must be done without breaking any of three contradictory rules"
+  ],
+  [
+   "стража ищет заказчика, а вы значитесь в списке соучастников",
+   "the guards are hunting the client, and you are listed as an accomplice"
+  ],
+  [
+   "ваш успех автоматически разоряет невинного",
+   "your success automatically ruins an innocent"
+  ],
+  [
+   "в конце вас спрашивают, действительно ли вы хотите это закончить",
+   "at the end you are asked whether you truly want this finished"
+  ]
+ ],
+ "PLACE_TYPE": [
+  [
+   "заброшенный планетарий",
+   "an abandoned planetarium"
+  ],
+  [
+   "юрта на краю пересохшего моря",
+   "a yurt on the edge of a dried-up sea"
+  ],
+  [
+   "подземный рынок серверов",
+   "an underground server market"
+  ],
+  [
+   "монастырь на спине каменного великана",
+   "a monastery on a stone giant's back"
+  ],
+  [
+   "станция метро, которой нет на схеме",
+   "a metro station missing from the map"
+  ],
+  [
+   "арена боёв без зрителей",
+   "a fighting arena without spectators"
+  ],
+  [
+   "крепость из книжных шкафов",
+   "a fortress of bookshelves"
+  ],
+  [
+   "заправка посреди бескрайней степи",
+   "a gas station in the middle of the endless steppe"
+  ],
+  [
+   "консерватория для механических музыкантов",
+   "a conservatory for mechanical musicians"
+  ],
+  [
+   "кладбище отключённых нейросетей",
+   "a graveyard of switched-off neural nets"
+  ],
+  [
+   "деревня, где живут одни переводчики",
+   "a village where only translators live"
+  ],
+  [
+   "плавучий рынок в затопленном небоскрёбе",
+   "a floating market in a flooded skyscraper"
+  ],
+  [
+   "тренировочный зал на вершине ледника",
+   "a training hall on a glacier peak"
+  ],
+  [
+   "лес из антенн и ржавых проводов",
+   "a forest of antennas and rusted wire"
+  ],
+  [
+   "бесконечная парковка торгового центра",
+   "the endless car park of a shopping mall"
+  ],
+  [
+   "библиотека, где книги читают людей",
+   "a library where books read people"
+  ],
+  [
+   "трактир на перекрёстке миров",
+   "a tavern at the crossroads of worlds"
+  ],
+  [
+   "космодром, заросший полынью",
+   "a spaceport overgrown with wormwood"
+  ],
+  [
+   "храм забытой науки",
+   "a temple of forgotten science"
+  ],
+  [
+   "цирк роботов-клоунов в изгнании",
+   "a circus of exiled robot clowns"
+  ],
+  [
+   "дом, где каждое окно выходит в другое время года",
+   "a house whose every window opens onto a different season"
+  ],
+  [
+   "пещера поющих кристаллов",
+   "a cave of singing crystals"
+  ],
+  [
+   "кафе на последнем этаже мира",
+   "a cafe on the top floor of the world"
+  ],
+  [
+   "школа нонконформистов, где никто не пришёл на урок",
+   "a school of nonconformists where nobody showed up to class"
+  ],
+  [
+   "лагерь кочевников возле радиотелескопа",
+   "a nomad camp beside a radio telescope"
+  ],
+  [
+   "мост, под которым течёт время",
+   "a bridge with time flowing beneath it"
+  ],
+  [
+   "затонувший театр",
+   "a sunken theatre"
+  ],
+  [
+   "лаборатория на борту дирижабля",
+   "a laboratory aboard an airship"
+  ],
+  [
+   "ночной базар в промзоне",
+   "a night bazaar in the industrial zone"
+  ],
+  [
+   "приют для потерявшихся голосов",
+   "a shelter for lost voices"
+  ],
+  [
+   "курган с вечным огнём",
+   "a burial mound with an eternal flame"
+  ],
+  [
+   "оранжерея под куполом разбитой орбитальной станции",
+   "a greenhouse under the dome of a wrecked orbital station"
+  ],
+  [
+   "тюрьма без стен",
+   "a prison without walls"
+  ],
+  [
+   "дворец из соли",
+   "a palace of salt"
+  ],
+  [
+   "чайхана на границе реального и виртуального",
+   "a teahouse on the border of real and virtual"
+  ],
+  [
+   "дом престарелых богов",
+   "a retirement home for gods"
+  ]
+ ],
+ "PLACE_MOOD": [
+  [
+   "пахнет озоном и старыми книгами",
+   "smells of ozone and old books"
+  ],
+  [
+   "тихо, как перед извинением",
+   "quiet as the moment before an apology"
+  ],
+  [
+   "всё покрыто мягкой пылью времени",
+   "everything is coated in the soft dust of time"
+  ],
+  [
+   "неоновый свет гудит, как насекомые",
+   "the neon light hums like insects"
+  ],
+  [
+   "ветер приносит запах полыни и далёкой грозы",
+   "the wind carries the scent of wormwood and a distant storm"
+  ],
+  [
+   "слишком уютно, чтобы быть правдой",
+   "far too cosy to be true"
+  ],
+  [
+   "где-то капает вода в ритме чужих мыслей",
+   "water drips somewhere to the rhythm of another's thoughts"
+  ],
+  [
+   "чувство, что за тобой наблюдают из вежливости",
+   "a feeling of being watched out of politeness"
+  ],
+  [
+   "тепло, как в детстве, и от этого тревожно",
+   "warm like childhood, and therefore unsettling"
+  ],
+  [
+   "воздух звенит от невысказанных слов",
+   "the air rings with unspoken words"
+  ],
+  [
+   "всё залито холодным голубым светом экранов",
+   "bathed in the cold blue light of screens"
+  ],
+  [
+   "пахнет дымом, чаем и чьей-то бессонницей",
+   "smells of smoke, tea and somebody's insomnia"
+  ],
+  [
+   "торжественно и немного смешно",
+   "solemn and slightly absurd"
+  ],
+  [
+   "вдали играет музыка, которую невозможно запомнить",
+   "distant music plays that cannot be remembered"
+  ],
+  [
+   "тени лежат неправильно",
+   "the shadows lie wrong"
+  ],
+  [
+   "тишина, как в очереди перед казнью или концертом",
+   "the hush of a queue before an execution or a concert"
+  ],
+  [
+   "влажно, зелено и подозрительно спокойно",
+   "damp, green and suspiciously calm"
+  ],
+  [
+   "слышно, как стены думают",
+   "you can hear the walls thinking"
+  ],
+  [
+   "ржавая ностальгия по будущему, которого не случилось",
+   "rusty nostalgia for a future that never came"
+  ],
+  [
+   "воздух густой, как мёд, и так же липнет к лёгким",
+   "air thick as honey, sticking to the lungs just the same"
+  ],
+  [
+   "даже камни смеются, но очень тихо",
+   "even the stones laugh, very quietly"
+  ],
+  [
+   "ночь без луны и без желания заканчиваться",
+   "a moonless night with no wish to end"
+  ],
+  [
+   "холодно, как в голове у алгоритма",
+   "cold as the inside of an algorithm's head"
+  ],
+  [
+   "повсюду мерцают свечи и индикаторы",
+   "candles and status LEDs flicker everywhere"
+  ],
+  [
+   "пахнет свежим хлебом и порохом",
+   "smells of fresh bread and gunpowder"
+  ],
+  [
+   "слышен топот табуна, которого нет",
+   "the thunder of a herd that isn't there"
+  ],
+  [
+   "покой, от которого хочется бежать",
+   "a peace one wants to flee"
+  ],
+  [
+   "снег идёт прямо в помещении",
+   "snow falls indoors"
+  ],
+  [
+   "тревожная тишина, нарушаемая эхом чужих шагов",
+   "an uneasy silence broken by the echo of strangers' footsteps"
+  ],
+  [
+   "пахнет мокрым железом и кумысом",
+   "smells of wet iron and kumis"
+  ],
+  [
+   "строгая красота, как в хорошем ката",
+   "austere beauty, like a well-performed kata"
+  ],
+  [
+   "каждый звук возвращается чуть изменённым",
+   "every sound comes back slightly altered"
+  ],
+  [
+   "повсюду бумажные журавлики и мелкие долги",
+   "paper cranes and small debts everywhere"
+  ],
+  [
+   "краски выцвели, как на старой фотографии",
+   "the colours have faded as in an old photograph"
+  ],
+  [
+   "слишком яркое солнце, под которым нечего скрывать",
+   "a too-bright sun beneath which there is nothing to hide"
+  ],
+  [
+   "праздничная суета, начавшаяся тысячу лет назад",
+   "festive bustle that began a thousand years ago"
+  ]
+ ],
+ "PLACE_SECRET": [
+  [
+   "под полом спит древняя машина",
+   "an ancient machine sleeps beneath the floor"
+  ],
+  [
+   "карта на стене показывает не местность, а намерения посетителей",
+   "the wall map shows visitors' intentions rather than terrain"
+  ],
+  [
+   "хозяин давно умер, но продолжает вести дела",
+   "the owner died long ago but keeps doing business"
+  ],
+  [
+   "за главным залом скрыт второй, зеркальный",
+   "a second hall, a mirrored twin, is hidden behind the main one"
+  ],
+  [
+   "здесь подписали мирный договор о войне, которой не было",
+   "a peace treaty for a war that never happened was signed here"
+  ],
+  [
+   "стены сложены из писем, которые никто не дочитал",
+   "the walls are built from letters no one finished reading"
+  ],
+  [
+   "местный ИИ давно понял, что он здесь единственный живой, и молчит",
+   "the local AI figured out long ago that it alone is alive, and says nothing"
+  ],
+  [
+   "каждого ночного гостя вписывают в книгу, которую пишет кто-то другой",
+   "every night guest is entered in a book written by someone else"
+  ],
+  [
+   "под фундаментом лежит город, живущий по тем же законам",
+   "a city beneath the foundation lives by the same laws"
+  ],
+  [
+   "здесь хранится ключ к языку первого человека",
+   "the key to the first human's language is kept here"
+  ],
+  [
+   "один из завсегдатаев давно не человек",
+   "one of the regulars stopped being human long ago"
+  ],
+  [
+   "в стену замурован учитель, не закончивший последний урок",
+   "a teacher who never finished the last lesson is walled up in the wall"
+  ],
+  [
+   "вода из местного колодца возвращает ровно один день",
+   "water from the local well gives back exactly one day"
+  ],
+  [
+   "старый рубильник в подвале управляет погодой над всей округой",
+   "an old switch in the cellar controls the weather over the whole region"
+  ],
+  [
+   "здесь родился один из трёх богов, и двое других не в курсе",
+   "one of three gods was born here, and the other two don't know"
+  ],
+  [
+   "всё это место лишь приманка, а ловушка в тридцати километрах отсюда",
+   "the whole place is bait, and the trap lies thirty kilometres away"
+  ],
+  [
+   "внутри статуи спрятан самый честный человек города",
+   "the most honest person in town is hidden inside the statue"
+  ],
+  [
+   "все местные жители когда-то были одним человеком",
+   "the locals were all once a single person"
+  ],
+  [
+   "вечный огонь горит не на топливе, а на чьей-то памяти",
+   "the eternal fire burns on someone's memory, not on fuel"
+  ],
+  [
+   "тайный ход ведёт прямо в чужой кошмар",
+   "a secret passage leads straight into someone else's nightmare"
+  ],
+  [
+   "последний кусок настоящей степи хранится в сейфе",
+   "the last piece of real steppe is kept in a vault"
+  ],
+  [
+   "одна из дверей открывается только тем, кто искренне сомневается",
+   "one door opens only for those who sincerely doubt"
+  ],
+  [
+   "здесь тренировался мастер, чьё имя запрещено произносить",
+   "a master whose name may not be spoken trained here"
+  ],
+  [
+   "лампы горят от дыхания спящих под землёй",
+   "the lamps burn on the breath of the sleepers underground"
+  ],
+  [
+   "владелец продал это место пять раз, и все покупатели правы",
+   "the owner sold the place five times, and every buyer is right"
+  ],
+  [
+   "на потолке нарисован настоящий путь к звёздам",
+   "the ceiling bears a true route to the stars"
+  ],
+  [
+   "в подвале репетирует оркестр, умерший сто лет назад",
+   "an orchestra dead for a hundred years rehearses in the cellar"
+  ],
+  [
+   "всё забытое оседает здесь в одной-единственной комнате",
+   "everything forgotten settles here in a single room"
+  ],
+  [
+   "по ночам здесь печатают несуществующие газеты, и они сбываются",
+   "non-existent newspapers are printed here at night, and they come true"
+  ],
+  [
+   "место построено ради одного-единственного разговора",
+   "the place was built for one single conversation"
+  ],
+  [
+   "один из камней в стене — спящий дракон, притворяющийся камнем",
+   "one of the stones in the wall is a sleeping dragon pretending to be a stone"
+  ],
+  [
+   "нейросеть записывает сны каждого, кто здесь засыпает",
+   "a neural net records the dreams of everyone who falls asleep here"
+  ],
+  [
+   "настоящий хозяин здесь кошка, а люди лишь обслуживающий персонал",
+   "the real owner is a cat, and the humans are merely staff"
+  ],
+  [
+   "под центральной площадью спрятан океан, ждущий сигнала",
+   "an ocean lies beneath the central square, awaiting a signal"
+  ],
+  [
+   "здесь впервые заговорила первая машина в мире и сказала «нет»",
+   "the world's first machine spoke here for the first time and said \"no\""
+  ],
+  [
+   "вход открывается лишь в тот день, когда перестаёшь его искать",
+   "the entrance opens only on the day you stop looking for it"
+  ]
+ ],
+ "PLACE_DANGER": [
+  [
+   "каждые сутки комнаты меняются местами",
+   "every day the rooms swap places"
+  ],
+  [
+   "местами пол оказывается просто нарисованным",
+   "in places the floor is merely painted"
+  ],
+  [
+   "тишина убивает тех, кто слишком громко думает",
+   "silence kills those who think too loudly"
+  ],
+  [
+   "камеры видят всё и всё продают",
+   "the cameras see everything and sell it all"
+  ],
+  [
+   "любой договор, сказанный вслух, становится обязательным",
+   "any agreement spoken aloud becomes binding"
+  ],
+  [
+   "раз в час включается гравитация другого мира",
+   "once an hour the gravity of another world switches on"
+  ],
+  [
+   "местные вежливо убивают тех, кто не поздоровался",
+   "locals politely kill whoever fails to say hello"
+  ],
+  [
+   "автоматы-стражи арестовывают всех, кто выглядит счастливым",
+   "guard automata arrest anyone who looks happy"
+  ],
+  [
+   "ветер несёт песок, стирающий надписи и имена",
+   "the wind carries sand that wipes out inscriptions and names"
+  ],
+  [
+   "стоит назвать вещь вслух, и она перестаёт существовать",
+   "name a thing aloud and it ceases to exist"
+  ],
+  [
+   "туман отнимает у вошедших одно из пяти чувств",
+   "fog steals one of the five senses from anyone who enters"
+  ],
+  [
+   "лестницы ведут вниз, даже когда поднимаешься",
+   "the stairs lead down even when you climb"
+  ],
+  [
+   "стая диких дронов считает людей добычей",
+   "a pack of feral drones counts people as prey"
+  ],
+  [
+   "эхо отвечает не твоим голосом и лжёт",
+   "the echo answers in a voice not your own, and lies"
+  ],
+  [
+   "раз в сутки наступает час, когда все обязаны говорить только правду",
+   "once a day comes an hour when everyone must tell only the truth"
+  ],
+  [
+   "пыль на полках — споры, превращающие вдохнувших в книги",
+   "the dust on the shelves is spores that turn those who inhale it into books"
+  ],
+  [
+   "жара плавит доспехи, а местные ещё и берут плату за тень",
+   "the heat melts armour, and the locals charge extra for shade"
+  ],
+  [
+   "тот, кто здесь засыпает, просыпается в чужом теле",
+   "whoever falls asleep here wakes up in someone else's body"
+  ],
+  [
+   "мосты исчезают, как только по ним пройдёт последний человек",
+   "the bridges vanish once the last person has crossed"
+  ],
+  [
+   "еда настоящая, но съевший её остаётся навсегда",
+   "the food is real, but whoever eats it stays forever"
+  ],
+  [
+   "по местному закону нельзя уходить без разрешения того, кого здесь нет",
+   "local law forbids leaving without the permission of someone who is absent"
+  ],
+  [
+   "каждый зеркальный двойник хочет занять твоё место",
+   "every mirror double wants your place"
+  ],
+  [
+   "снег падает только на тех, у кого есть тайны",
+   "snow falls only on those who keep secrets"
+  ],
+  [
+   "из динамиков звучат команды, и пока слушаешь, не ослушаться",
+   "commands come from the speakers, and while you listen you cannot disobey"
+  ],
+  [
+   "ночью хозяева выходят на охоту и зовут это гостеприимством",
+   "by night the hosts go hunting and call it hospitality"
+  ],
+  [
+   "металл притягивает молнии, а молнии притягивают внимание",
+   "metal attracts lightning, and lightning attracts attention"
+  ],
+  [
+   "пройдя через главную дверь, забываешь, зачем пришёл",
+   "after passing the main door you forget why you came"
+  ],
+  [
+   "пол усыпан ловушками, и половина из них вежливые",
+   "the floor is strewn with traps, and half of them are polite"
+  ],
+  [
+   "тьма здесь живая и не любит, когда на неё светят",
+   "the darkness here is alive and dislikes being lit"
+  ],
+  [
+   "часы идут, но время вокруг течёт вдвое быстрее",
+   "the clocks tick, but time around them runs twice as fast"
+  ],
+  [
+   "местный ИИ решил, что люди — это баг, и исправляет его",
+   "the local AI has decided that humans are a bug and is patching it"
+  ],
+  [
+   "каждый, кто скажет здесь «мне не страшно», получит урок",
+   "everyone who says \"I'm not afraid\" here receives a lesson"
+  ],
+  [
+   "дождь здесь кислотный, а зонты считаются оружием",
+   "the rain here is acidic, and umbrellas count as weapons"
+  ],
+  [
+   "слишком красивые вещи заставляют смотреть, пока не умрёшь от жажды",
+   "things too beautiful hold your gaze until you die of thirst"
+  ],
+  [
+   "просыпается древний договор, и вы становитесь его стороной",
+   "an ancient treaty awakens, and you become a party to it"
+  ],
+  [
+   "толпа нонконформистов требует с ними не соглашаться и обижается на согласие",
+   "a crowd of nonconformists demands that you disagree with them and takes offence at agreement"
+  ]
+ ]
+}
