@@ -4,6 +4,7 @@ Growth: invite links (+credits both sides), daily streak, saved ideas, daily DM 
 Money: Telegram Stars (generation packs, 30-day unlimited).
 """
 import asyncio
+import logging
 
 from aiogram import F, Router
 from aiogram.filters import Command, CommandStart
@@ -14,6 +15,7 @@ from common.db import Store
 from common.growth import parse_ref, ref_link, share_url, start_arg
 from common.stars import payments_router, send_invoice
 from .card import render
+from .deck import build as build_deck
 from .tables import GENERATORS, ICONS, make, text
 
 FREE_PER_DAY = 5
@@ -21,7 +23,7 @@ FREE_SAVED = 5
 INVITER_BONUS = 5
 INVITEE_BONUS = 5
 COST = {"set": 3}  # a campaign kit is five cards in one
-PRODUCTS = {"pack_50": 25, "premium_30": 149}  # payload -> Stars
+PRODUCTS = {"pack_50": 25, "premium_30": 149, "deck_10": 49}  # payload -> Stars
 
 store = Store("ideas")
 router = Router()
@@ -40,6 +42,9 @@ T = {
         "limit": "На сегодня бесплатные генерации закончились.\n\n👥 Пригласи друга — вы оба получите +{bonus}.\n⭐ Или возьми безлимит.",
         "btn_invite": "👥 Пригласить друга", "buy_pack": "+50 генераций · {p} ⭐", "buy_premium": "Безлимит 30 дней · {p} ⭐",
         "pack_title": "50 генераций", "pack_desc": "50 дополнительных генераций без срока",
+        "deck_title": "PDF-колода, 10 карточек", "deck_desc": "10 карточек для печати и игры одним PDF-файлом",
+        "buy_deck": "🃏 PDF-колода, 10 карточек · {p} ⭐", "deck_wait": "Спасибо! Собираю колоду, это займёт полминуты…",
+        "deck_caption": "🃏 Твоя колода: 10 карточек. Распечатай и тяни наугад на сессии.", "deck_fail": "Не получилось собрать колоду. Оплата сохранена, нажми /deck ещё раз.",
         "premium_title": "Безлимит на 30 дней", "premium_desc": "Безлимит генераций, безлимитное избранное",
         "paid": "Спасибо! Покупка зачислена ⭐", "balance": "Осталось купленных генераций: {n}\nБесплатных сегодня: {free}",
         "invite": ("👥 <b>Пригласи друзей</b>\n\nЗа каждого друга, который запустит бота по твоей ссылке, "
@@ -65,6 +70,9 @@ T = {
         "limit": "You've used today's free generations.\n\n👥 Invite a friend — you both get +{bonus}.\n⭐ Or go unlimited.",
         "btn_invite": "👥 Invite a friend", "buy_pack": "+50 generations · {p} ⭐", "buy_premium": "Unlimited 30 days · {p} ⭐",
         "pack_title": "50 generations", "pack_desc": "50 extra generations, no expiry",
+        "deck_title": "PDF deck, 10 cards", "deck_desc": "10 printable idea cards in one PDF",
+        "buy_deck": "🃏 PDF deck, 10 cards · {p} ⭐", "deck_wait": "Thank you! Building your deck, this takes half a minute…",
+        "deck_caption": "🃏 Your deck: 10 cards. Print it and draw one at random during a session.", "deck_fail": "Could not build the deck. Your payment is saved, tap /deck again.",
         "premium_title": "Unlimited, 30 days", "premium_desc": "Unlimited generations and unlimited saved ideas",
         "paid": "Thank you! Your purchase is active ⭐", "balance": "Bought generations left: {n}\nFree today: {free}",
         "invite": ("👥 <b>Invite friends</b>\n\nFor every friend who starts the bot from your link "
@@ -114,7 +122,8 @@ def shop(user) -> InlineKeyboardMarkup:
     t = T[lang(user)]
     return kb([btn(t["btn_invite"], "m:invite")],
               [btn(t["buy_pack"].format(p=PRODUCTS["pack_50"]), "buy:pack_50")],
-              [btn(t["buy_premium"].format(p=PRODUCTS["premium_30"]), "buy:premium_30")])
+              [btn(t["buy_premium"].format(p=PRODUCTS["premium_30"]), "buy:premium_30")],
+              [btn(t["buy_deck"].format(p=PRODUCTS["deck_10"]), "buy:deck_10")])
 
 
 async def idea_keyboard(user, bot, kind: str, seed: int) -> InlineKeyboardMarkup:
@@ -281,12 +290,46 @@ async def buy(c: CallbackQuery):
     if key not in PRODUCTS:
         return await c.answer()
     t = T[lang(user)]
-    kind = "pack" if key == "pack_50" else "premium"
+    kind = {"pack_50": "pack", "deck_10": "deck"}.get(key, "premium")
     await send_invoice(c.bot, c.message.chat.id, t[f"{kind}_title"], t[f"{kind}_desc"], key, PRODUCTS[key])
     await c.answer()
 
 
+async def deliver_deck(bot, uid: int) -> bool:
+    """Builds and sends the PDF deck against a paid voucher. On failure the voucher is given back."""
+    lg = store.get_lang(uid) or "ru"
+    if not store.take_voucher(uid, "deck"):
+        return False
+    try:
+        me = await bot.me()
+        pdf = await asyncio.to_thread(build_deck, me.username)
+        await bot.send_document(uid, BufferedInputFile(pdf, filename="ideaforge-deck.pdf"), caption=T[lg]["deck_caption"])
+    except Exception:
+        store.add_voucher(uid, "deck")
+        logging.exception("deck delivery failed")
+        await bot.send_message(uid, T[lg]["deck_fail"])
+        return False
+    return True
+
+
+async def after_paid(message: Message, payload: str) -> None:
+    if payload == "deck_10":
+        await deliver_deck(message.bot, message.from_user.id)
+
+
+@router.message(Command("deck"))
+async def deck_cmd(m: Message):
+    user = m.from_user
+    if store.vouchers(user.id, "deck"):
+        return await deliver_deck(m.bot, user.id)
+    t = T[lang(user)]
+    await send_invoice(m.bot, m.chat.id, t["deck_title"], t["deck_desc"], "deck_10", PRODUCTS["deck_10"])
+
+
 def on_paid(uid: int, payload: str) -> str:
+    if payload == "deck_10":
+        store.add_voucher(uid, "deck")
+        return T[store.get_lang(uid) or "ru"]["deck_wait"]
     if payload == "pack_50":
         store.add_credits(uid, 50)
     else:
@@ -308,7 +351,7 @@ async def menu_action(c: CallbackQuery):
     await c.answer()
 
 
-router.include_router(payments_router(store, PRODUCTS, on_paid))
+router.include_router(payments_router(store, PRODUCTS, on_paid, after_paid))
 
 
 @router.callback_query()

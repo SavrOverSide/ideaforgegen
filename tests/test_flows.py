@@ -194,6 +194,54 @@ class Kit(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(c.last()["kind"], "photo")
 
 
+class Deck(unittest.IsolatedAsyncioTestCase):
+    async def test_deck_purchase_delivers_pdf(self):
+        c = chat(9201)
+        BOT.sent.clear()
+        await c.say("/deck")
+        inv = [x for x in BOT.sent if x["kind"] == "invoice"]
+        self.assertEqual(inv[0]["prices"][0].amount, 49)
+        BOT.sent.clear()
+        await c.pay("deck_10", 49)
+        docs = [x for x in BOT.sent if x["kind"] == "document"]
+        self.assertEqual(len(docs), 1)
+        data = docs[0]["document"].data
+        self.assertTrue(data.startswith(b"%PDF"))
+        self.assertLess(len(data), 20 * 1024 * 1024)               # Telegram bots may send files up to 50 MB
+        self.assertEqual(store.vouchers(9201, "deck"), 0)
+        assert_buttons_routable(self, c)
+
+    async def test_deck_has_ten_pages_and_all_kinds(self):
+        import io
+        from PIL import Image
+        from ideas.deck import build
+        pdf = build("b")
+        self.assertEqual(pdf.count(b"/Type /Page") - pdf.count(b"/Type /Pages"), 10)
+
+    async def test_failed_delivery_keeps_voucher_and_retry_works(self):
+        c = chat(9202)
+        import ideas.bot as mod
+        real = mod.build_deck
+        mod.build_deck = lambda *_: (_ for _ in ()).throw(RuntimeError("boom"))
+        try:
+            await c.pay("deck_10", 49)
+        finally:
+            mod.build_deck = real
+        self.assertEqual(store.vouchers(9202, "deck"), 1)           # paid, not lost
+        self.assertIn("/deck", " ".join(x.get("text", "") for x in BOT.sent if x.get("chat_id") == 9202))
+        BOT.sent.clear()
+        await c.say("/deck")                                          # retry delivers without paying again
+        self.assertEqual(len([x for x in BOT.sent if x["kind"] == "document"]), 1)
+        self.assertEqual(store.vouchers(9202, "deck"), 0)
+
+    async def test_shop_offers_deck(self):
+        c = chat(9203)
+        for _ in range(ib.FREE_PER_DAY + 1):
+            await c.press("g:game")
+        self.assertIn("buy:deck_10", [b.callback_data for b in c.buttons()])
+        assert_buttons_routable(self, c)
+
+
 class DailyPost(unittest.IsolatedAsyncioTestCase):
     async def test_post_to_channel_and_dms(self):
         import run
