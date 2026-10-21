@@ -80,3 +80,11 @@ class BotCommand:
 class LinkPreviewOptions(_Obj):
     def __init__(self, **kw):
         self.__dict__.update(kw)
+
+
+class FSInputFile(_Obj):
+    def __init__(self, path, filename=None):
+        import pathlib
+        self.path = pathlib.Path(path)
+        assert self.path.exists(), f"file to send does not exist: {self.path}"
+        self.filename = filename or self.path.name

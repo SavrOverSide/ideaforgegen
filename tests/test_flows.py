@@ -238,6 +238,50 @@ class Kit(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(c.last()["kind"], "photo")
 
 
+class Book(unittest.IsolatedAsyncioTestCase):
+    async def test_book_screen_buy_and_redownload(self):
+        c = chat(9901)
+        await c.say("/book")
+        self.assertEqual(c.last()["kind"], "photo")
+        self.assertIn("buy:book_1", [b.callback_data for b in c.buttons()])
+        assert_buttons_routable(self, c)
+        BOT.sent.clear()
+        await c.press("buy:book_1", on=harness.Message(c.user, "", BOT))
+        inv = [x for x in BOT.sent if x["kind"] == "invoice"][0]
+        self.assertEqual((inv["payload"], inv["prices"][0].amount), ("book_1", 99))
+        BOT.sent.clear()
+        await c.pay("book_1", 99)
+        docs = [x for x in BOT.sent if x["kind"] == "document"]
+        self.assertEqual(len(docs), 1)
+        self.assertEqual(docs[0]["document"].path.name, "step-i-statika-tom1.pdf")   # Russian user, Russian edition
+        # owners get the file again for free, and the other edition on request
+        BOT.sent.clear()
+        await c.say("/book")
+        await c.press("bk:en")
+        names = [x["document"].path.name for x in BOT.sent if x["kind"] == "document"]
+        self.assertEqual(names, ["step-i-statika-tom1.pdf", "steppe-and-static-vol1.pdf"])
+        self.assertFalse([x for x in BOT.sent if x["kind"] == "invoice"])
+
+    async def test_other_edition_needs_ownership(self):
+        c = chat(9902)
+        BOT.sent.clear()
+        await c.press("bk:en")
+        self.assertFalse([x for x in BOT.sent if x["kind"] == "document"])
+
+    async def test_english_user_gets_english_screen(self):
+        c = chat(9903, "en")
+        await c.say("/book")
+        self.assertIn("Steppe", c.last()["caption"])
+
+    async def test_shop_offers_book(self):
+        c = chat(9904)
+        for _ in range(ib.FREE_PER_DAY + 1):
+            await c.press("g:npc")
+        self.assertIn("book", [b.callback_data for b in c.buttons()])
+        await c.press("book")
+        self.assertEqual(c.last()["kind"], "photo")
+
+
 class Deck(unittest.IsolatedAsyncioTestCase):
     async def test_deck_purchase_delivers_pdf(self):
         c = chat(9201)

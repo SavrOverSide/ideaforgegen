@@ -52,6 +52,18 @@ async def main():
     calls = await h.paid(13, "deck_10", 49)
     h.expect("SendDocument" in name(calls), "deck PDF delivered")
 
+    # book: screen, purchase, file, other edition, free re-download
+    calls = await h.say(14, "/book")
+    h.expect("SendPhoto" in name(calls) and "buy:book_1" in h.buttons(calls), "book screen")
+    calls = await h.press(14, "buy:book_1")
+    await h.pre_checkout(14, "book_1", 99)
+    calls = await h.paid(14, "book_1", 99)
+    h.expect("SendDocument" in name(calls), "book PDF delivered")
+    calls = await h.press(14, "bk:en")
+    h.expect("SendDocument" in name(calls), "English edition delivered")
+    calls = await h.say(14, "/book")
+    h.expect("SendDocument" in name(calls) and "SendInvoice" not in name(calls), "owner re-downloads free")
+
     # referral link
     await h.say(20, "/start")
     calls = await h.say(21, "/start ref_20")

@@ -4,12 +4,13 @@ Growth: invite links (+credits both sides), daily streak, saved ideas, daily DM 
 Money: Telegram Stars (generation packs, 30-day unlimited).
 """
 import asyncio
+from pathlib import Path
 import json
 import logging
 
 from aiogram import F, Router
 from aiogram.filters import Command, CommandStart
-from aiogram.types import BufferedInputFile, CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup, Message
+from aiogram.types import BufferedInputFile, CallbackQuery, FSInputFile, InlineKeyboardButton, InlineKeyboardMarkup, Message
 
 from common.config import lang_of
 from common.db import Store
@@ -25,7 +26,7 @@ INVITER_BONUS = 5
 INVITEE_BONUS = 5
 STREAK_EVERY, STREAK_BONUS = 7, 3   # every 7th day in a row: +3 generations
 COST = {"set": 3}  # a campaign kit is five cards in one
-PRODUCTS = {"pack_50": 25, "premium_30": 149, "deck_10": 49}  # payload -> Stars
+PRODUCTS = {"pack_50": 25, "premium_30": 149, "deck_10": 49, "book_1": 99}  # payload -> Stars
 
 store = Store("ideas")
 router = Router()
@@ -45,6 +46,14 @@ T = {
         "limit": "На сегодня бесплатные генерации закончились.\n\n👥 Пригласи друга — вы оба получите +{bonus}.\n⭐ Или возьми безлимит.",
         "btn_invite": "👥 Пригласить друга", "buy_pack": "+50 генераций · {p} ⭐", "buy_premium": "Безлимит 30 дней · {p} ⭐",
         "pack_title": "50 генераций", "pack_desc": "50 дополнительных генераций без срока",
+        "book_title": "Книга «Степь и статика», том 1", "book_desc": "100 готовых идей для любой НРИ, PDF на 14 страниц",
+        "buy_book": "📕 Книга: 100 идей для НРИ · {p} ⭐", "book_buy": "Купить · {p} ⭐", "book_other": "🇬🇧 English edition",
+        "book_screen": ("📕 <b>«Степь и статика». Том 1</b>\n\n100 готовых идей для любой настольной ролевой игры в одном PDF "
+                        "на 14 страниц: 20 персонажей, 20 артефактов, 20 квестов, 20 локаций, 10 фракций, 10 идей игр и 10 связанных "
+                        "наборов для кампании. Без повторов, с таблицами для бросков d20.\n\nПокупается один раз: скачать снова можно "
+                        "в любой момент командой /book. Английская версия в комплекте."),
+        "book_caption": "📕 «Степь и статика», том 1. Приятной игры! Скачать снова: /book",
+        "book_wait": "Спасибо! 📕 Книга ваша, отправляю файл.",
         "deck_title": "PDF-колода, 10 карточек", "deck_desc": "10 карточек для печати и игры одним PDF-файлом",
         "buy_deck": "🃏 PDF-колода, 10 карточек · {p} ⭐", "deck_wait": "Спасибо! Собираю колоду, это займёт полминуты…",
         "deck_caption": "🃏 Твоя колода: 10 карточек. Распечатай и тяни наугад на сессии.", "deck_fail": "Не получилось собрать колоду. Оплата сохранена, нажми /deck ещё раз.",
@@ -74,6 +83,14 @@ T = {
         "limit": "You've used today's free generations.\n\n👥 Invite a friend — you both get +{bonus}.\n⭐ Or go unlimited.",
         "btn_invite": "👥 Invite a friend", "buy_pack": "+50 generations · {p} ⭐", "buy_premium": "Unlimited 30 days · {p} ⭐",
         "pack_title": "50 generations", "pack_desc": "50 extra generations, no expiry",
+        "book_title": "Steppe & Static, Volume 1", "book_desc": "100 ready-to-use seeds for any RPG, 14-page PDF",
+        "buy_book": "📕 Book: 100 RPG seeds · {p} ⭐", "book_buy": "Buy · {p} ⭐", "book_other": "🇷🇺 Русская версия",
+        "book_screen": ("📕 <b>Steppe &amp; Static. Volume 1</b>\n\n100 ready-to-use seeds for any tabletop RPG in one 14-page PDF: "
+                        "20 characters, 20 artifacts, 20 quests, 20 locations, 10 factions, 10 game pitches and 10 linked "
+                        "campaign kits. No repeats, with d20 roll tables.\n\nBuy once: download again any time with /book. "
+                        "The Russian edition is included."),
+        "book_caption": "📕 Steppe & Static, Volume 1. Have a great game! Download again: /book",
+        "book_wait": "Thank you! 📕 The book is yours, sending the file.",
         "deck_title": "PDF deck, 10 cards", "deck_desc": "10 printable idea cards in one PDF",
         "buy_deck": "🃏 PDF deck, 10 cards · {p} ⭐", "deck_wait": "Thank you! Building your deck, this takes half a minute…",
         "deck_caption": "🃏 Your deck: 10 cards. Print it and draw one at random during a session.", "deck_fail": "Could not build the deck. Your payment is saved, tap /deck again.",
@@ -127,7 +144,8 @@ def shop(user) -> InlineKeyboardMarkup:
     return kb([btn(t["btn_invite"], "m:invite")],
               [btn(t["buy_pack"].format(p=PRODUCTS["pack_50"]), "buy:pack_50")],
               [btn(t["buy_premium"].format(p=PRODUCTS["premium_30"]), "buy:premium_30")],
-              [btn(t["buy_deck"].format(p=PRODUCTS["deck_10"]), "buy:deck_10")])
+              [btn(t["buy_deck"].format(p=PRODUCTS["deck_10"]), "buy:deck_10")],
+              [btn(t["buy_book"].format(p=PRODUCTS["book_1"]), "book")])
 
 
 async def idea_keyboard(user, bot, kind: str, seed: int) -> InlineKeyboardMarkup:
@@ -311,7 +329,7 @@ async def buy(c: CallbackQuery):
     if key not in PRODUCTS:
         return await c.answer()
     t = T[lang(user)]
-    kind = {"pack_50": "pack", "deck_10": "deck"}.get(key, "premium")
+    kind = {"pack_50": "pack", "deck_10": "deck", "book_1": "book"}.get(key, "premium")
     await send_invoice(c.bot, c.message.chat.id, t[f"{kind}_title"], t[f"{kind}_desc"], key, PRODUCTS[key])
     await c.answer()
 
@@ -334,8 +352,54 @@ async def deliver_deck(bot, uid: int) -> bool:
 
 
 async def after_paid(message: Message, payload: str) -> None:
+    if payload == "book_1":
+        await send_book(message.bot, message.from_user.id, lang(message.from_user))
     if payload == "deck_10":
         await deliver_deck(message.bot, message.from_user.id)
+
+
+BOOKS = Path(__file__).resolve().parent.parent / "assets" / "books"
+BOOK_FILES = {"ru": "step-i-statika-tom1.pdf", "en": "steppe-and-static-vol1.pdf"}
+
+
+def owns_book(uid: int) -> bool:
+    return store.vouchers(uid, "own_book_1") > 0
+
+
+async def send_book(bot, uid: int, lg: str) -> None:
+    other = "en" if lg == "ru" else "ru"
+    t = T[lg]
+    await bot.send_document(uid, FSInputFile(BOOKS / BOOK_FILES[lg]), caption=t["book_caption"],
+                            reply_markup=kb([btn(t["book_other"], f"bk:{other}")]))
+
+
+@router.message(Command("book"))
+async def book_cmd(m: Message):
+    await book_screen(m, m.from_user)
+
+
+@router.callback_query(F.data == "book")
+async def book_button(c: CallbackQuery):
+    await book_screen(c.message, c.from_user)
+    await c.answer()
+
+
+async def book_screen(m: Message, user) -> None:
+    store.ensure_user(user.id)
+    lg = lang(user)
+    if owns_book(user.id):
+        return await send_book(m.bot, user.id, lg)
+    t = T[lg]
+    await m.answer_photo(FSInputFile(BOOKS / f"cover-{lg}.png"), caption=t["book_screen"], parse_mode="HTML",
+                         reply_markup=kb([btn(t["book_buy"].format(p=PRODUCTS["book_1"]), "buy:book_1")]))
+
+
+@router.callback_query(F.data.startswith("bk:"))
+async def book_other_edition(c: CallbackQuery):
+    lg = c.data[3:]
+    if lg in BOOK_FILES and owns_book(c.from_user.id):
+        await send_book(c.bot, c.from_user.id, lg)
+    await c.answer()
 
 
 @router.message(Command("deck"))
@@ -348,6 +412,9 @@ async def deck_cmd(m: Message):
 
 
 def on_paid(uid: int, payload: str) -> str:
+    if payload == "book_1":
+        store.add_voucher(uid, "own_book_1")   # ownership: never spent, /book re-sends the file
+        return T[store.get_lang(uid) or "ru"]["book_wait"]
     if payload == "deck_10":
         store.add_voucher(uid, "deck")
         return T[store.get_lang(uid) or "ru"]["deck_wait"]
