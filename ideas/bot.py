@@ -195,6 +195,8 @@ async def start(m: Message):
     if arg == "sub":
         store.set_sub(user.id, True)
         return await m.answer(tr(user, "sub_on"), reply_markup=menu(user))
+    if arg == "book":  # link from the channel post
+        return await book_screen(m, user)
     await m.answer(tr(user, "welcome", free=FREE_PER_DAY, bonus=INVITER_BONUS), parse_mode="HTML", reply_markup=menu(user))
     if created:  # show the product right away: a whole campaign kit, on the house
         await m.answer(tr(user, "first_gift"))

@@ -262,6 +262,11 @@ class Book(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(names, ["step-i-statika-tom1.pdf", "steppe-and-static-vol1.pdf"])
         self.assertFalse([x for x in BOT.sent if x["kind"] == "invoice"])
 
+    async def test_start_book_deeplink(self):
+        c = chat(9905)
+        await c.say("/start book")
+        self.assertIn("buy:book_1", [b.callback_data for b in c.buttons()])
+
     async def test_other_edition_needs_ownership(self):
         c = chat(9902)
         BOT.sent.clear()
