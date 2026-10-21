@@ -1,3 +1,5 @@
+import json
+import secrets
 import sqlite3
 import time
 from datetime import date, datetime, timedelta
@@ -57,6 +59,15 @@ class Store:
                 payload TEXT,
                 at INTEGER,
                 PRIMARY KEY (user_id, key)
+            );
+            CREATE TABLE IF NOT EXISTS duels (
+                code TEXT PRIMARY KEY, creator INTEGER, name TEXT, qs TEXT, score INTEGER, at INTEGER
+            );
+            CREATE TABLE IF NOT EXISTS duel_plays (
+                code TEXT, user_id INTEGER, name TEXT, score INTEGER, at INTEGER, PRIMARY KEY (code, user_id)
+            );
+            CREATE TABLE IF NOT EXISTS week_snap (
+                user_id INTEGER PRIMARY KEY, correct INTEGER, answered INTEGER, rounds INTEGER
             );
             CREATE TABLE IF NOT EXISTS subs (
                 user_id INTEGER PRIMARY KEY,
@@ -130,6 +141,22 @@ class Store:
             self.conn.execute("UPDATE users SET credits = credits - 1 WHERE id = ?", (uid,))
         else:
             return False
+        self.conn.commit()
+        return True
+
+    def take_n(self, uid: int, free_per_day: int, n: int) -> bool:
+        """Spend `n` uses at once, or none at all if there are not enough (premium is unlimited)."""
+        premium_until, credits, used_day, used = self._user(uid)
+        if premium_until > time.time():
+            return True
+        day = today().isoformat()
+        used = used if used_day == day else 0
+        free = max(0, free_per_day - used)
+        if free + credits < n:
+            return False
+        from_free = min(free, n)
+        self.conn.execute("UPDATE users SET used_day = ?, used = ?, credits = credits - ? WHERE id = ?",
+                          (day, used + from_free, n - from_free, uid))
         self.conn.commit()
         return True
 
@@ -226,6 +253,38 @@ class Store:
     def delete_saved(self, uid: int, key: str) -> None:
         self.conn.execute("DELETE FROM saved WHERE user_id = ? AND key = ?", (uid, key))
         self.conn.commit()
+
+    # ---- weekly summary: what changed since the previous one --------------------------------------
+    def week_delta(self, uid: int) -> dict:
+        """Stats gained since the last call, then moves the snapshot forward."""
+        now = self.user_stats(uid)
+        row = self.conn.execute("SELECT correct, answered, rounds FROM week_snap WHERE user_id = ?", (uid,)).fetchone()
+        before = dict(zip(("correct", "answered", "rounds"), row or (0, 0, 0)))
+        self.conn.execute("INSERT OR REPLACE INTO week_snap VALUES (?, ?, ?, ?)", (uid, now["correct"], now["answered"], now["rounds"]))
+        self.conn.commit()
+        return {k: now[k] - before[k] for k in now}
+
+    # ---- duels -------------------------------------------------------------------------------
+    def create_duel(self, creator: int, name: str, qs: list, score: int) -> str:
+        code = secrets.token_hex(4)
+        self.conn.execute("INSERT INTO duels VALUES (?, ?, ?, ?, ?, ?)", (code, creator, name, json.dumps(qs), score, int(time.time())))
+        self.conn.commit()
+        return code
+
+    def get_duel(self, code: str):
+        row = self.conn.execute("SELECT creator, name, qs, score FROM duels WHERE code = ?", (code,)).fetchone()
+        return None if row is None else {"creator": row[0], "name": row[1], "qs": json.loads(row[2]), "score": row[3]}
+
+    def duel_played(self, code: str, uid: int) -> bool:
+        return self.conn.execute("SELECT 1 FROM duel_plays WHERE code = ? AND user_id = ?", (code, uid)).fetchone() is not None
+
+    def duel_play(self, code: str, uid: int, name: str, score: int) -> bool:
+        cur = self.conn.execute("INSERT OR IGNORE INTO duel_plays VALUES (?, ?, ?, ?, ?)", (code, uid, name, score, int(time.time())))
+        self.conn.commit()
+        return cur.rowcount == 1
+
+    def duel_plays(self, code: str) -> list:
+        return self.conn.execute("SELECT name, score FROM duel_plays WHERE code = ? ORDER BY score DESC, at", (code,)).fetchall()
 
     # ---- daily-message subscriptions -----------------------------------------------------------
     def set_sub(self, uid: int, on: bool) -> None:

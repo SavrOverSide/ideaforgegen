@@ -20,6 +20,7 @@ FREE_PER_DAY = 5
 FREE_SAVED = 5
 INVITER_BONUS = 5
 INVITEE_BONUS = 5
+COST = {"set": 3}  # a campaign kit is five cards in one
 PRODUCTS = {"pack_50": 25, "premium_30": 149}  # payload -> Stars
 
 store = Store("ideas")
@@ -31,7 +32,8 @@ T = {
                     "Одно нажатие — и готовая карточка: идея игры, персонаж, фракция, артефакт, квест или локация.\n"
                     "Бесплатно {free} в день. Приведи друга — оба получите +{bonus} генераций.\n\n"
                     "Что куём?"),
-        "kinds": {"game": "Игра", "npc": "Персонаж", "faction": "Фракция", "item": "Артефакт", "quest": "Квест", "place": "Локация"},
+        "kinds": {"game": "Игра", "npc": "Персонаж", "faction": "Фракция", "item": "Артефакт", "quest": "Квест", "place": "Локация",
+                  "set": "Набор для кампании (3 генерации)"},
         "again": "🔄 Ещё", "save": "❤️ В избранное", "share": "📤 Поделиться", "saved_ok": "Сохранено ❤️",
         "saved_dup": "Уже в избранном", "saved_full": "В избранном {n} — это лимит бесплатного тарифа. Премиум снимает его.",
         "streak": "🔥 Серия: {n} дн.",
@@ -55,7 +57,8 @@ T = {
                     "One tap, one finished card: a game idea, character, faction, artifact, quest or location.\n"
                     "{free} free per day. Invite a friend — you both get +{bonus} generations.\n\n"
                     "What shall we forge?"),
-        "kinds": {"game": "Game", "npc": "Character", "faction": "Faction", "item": "Artifact", "quest": "Quest", "place": "Location"},
+        "kinds": {"game": "Game", "npc": "Character", "faction": "Faction", "item": "Artifact", "quest": "Quest", "place": "Location",
+                  "set": "Campaign kit (3 generations)"},
         "again": "🔄 Again", "save": "❤️ Save", "share": "📤 Share", "saved_ok": "Saved ❤️",
         "saved_dup": "Already saved", "saved_full": "You have {n} saved — the free limit. Premium removes it.",
         "streak": "🔥 Streak: {n} days",
@@ -95,8 +98,9 @@ def kb(*rows) -> InlineKeyboardMarkup:
 
 def kinds_rows(user):
     names = T[lang(user)]["kinds"]
-    keys = list(GENERATORS)
-    return [[btn(f"{ICONS[k]} {names[k]}", f"g:{k}") for k in keys[i:i + 3]] for i in range(0, len(keys), 3)]
+    keys = [k for k in GENERATORS if k != "set"]
+    rows = [[btn(f"{ICONS[k]} {names[k]}", f"g:{k}") for k in keys[i:i + 3]] for i in range(0, len(keys), 3)]
+    return rows + [[btn(f"{ICONS['set']} {names['set']}", "g:set")]]
 
 
 def menu(user) -> InlineKeyboardMarkup:
@@ -124,7 +128,7 @@ async def idea_keyboard(user, bot, kind: str, seed: int) -> InlineKeyboardMarkup
 
 async def send_idea(m: Message, user, kind: str) -> None:
     """Spends one generation (or shows the shop) and sends the card."""
-    if not store.take(user.id, FREE_PER_DAY):
+    if not store.take_n(user.id, FREE_PER_DAY, COST.get(kind, 1)):
         return await m.answer(tr(user, "limit", bonus=INVITER_BONUS), reply_markup=shop(user))
     idea = make(kind)
     me = await m.bot.me()

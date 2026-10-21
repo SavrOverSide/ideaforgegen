@@ -22,7 +22,7 @@ class IdeaForgeFlows(unittest.IsolatedAsyncioTestCase):
         data = [b.callback_data for b in c.buttons()]
         for k in GENERATORS:
             self.assertIn(f"g:{k}", data)
-        self.assertEqual(len(GENERATORS), 6)
+        self.assertEqual(len(GENERATORS), 7)
         assert_buttons_routable(self, c)
 
     async def test_every_kind_generates_card_with_working_buttons(self):
@@ -158,6 +158,42 @@ class IdeaForgeFlows(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(set(ib.T["ru"]["kinds"]), set(GENERATORS))
 
 
+class Kit(unittest.IsolatedAsyncioTestCase):
+    async def test_kit_costs_three_and_is_all_or_nothing(self):
+        c = chat(9101)
+        await c.press("g:set")
+        self.assertEqual(c.last()["kind"], "photo")
+        self.assertEqual(store.free_left(9101, ib.FREE_PER_DAY), 2)
+        await c.press("g:set")                          # only 2 left: refused, nothing is spent
+        self.assertEqual(c.last()["kind"], "text")
+        self.assertEqual(store.free_left(9101, ib.FREE_PER_DAY), 2)
+        await c.press("g:game")
+        self.assertEqual(c.last()["kind"], "photo")
+        store.add_credits(9101, 2)                       # 1 free + 2 credits = exactly one kit
+        await c.press("g:set")
+        self.assertEqual(c.last()["kind"], "photo")
+        self.assertEqual((store.free_left(9101, ib.FREE_PER_DAY), store.credits(9101)), (0, 0))
+
+    async def test_kit_is_linked_and_saveable(self):
+        from ideas.tables import make
+        k = make("set", 5)
+        self.assertEqual(k, make("set", 5))
+        text_ru = text(k, "ru")
+        self.assertIn("Лидер: ", text_ru)
+        c = chat(9102)
+        store.add_credits(9102, 5)
+        await c.press("sv:set:5")
+        await c.say("/saved")
+        self.assertIn(text_ru, c.last()["text"])
+
+    async def test_premium_kit_unlimited(self):
+        c = chat(9103)
+        store.add_premium(9103, 30)
+        for _ in range(4):
+            await c.press("g:set")
+            self.assertEqual(c.last()["kind"], "photo")
+
+
 class DailyPost(unittest.IsolatedAsyncioTestCase):
     async def test_post_to_channel_and_dms(self):
         import run
@@ -197,5 +233,5 @@ class Profile(unittest.IsolatedAsyncioTestCase):
         c = chat(8801)
         for k in GENERATORS:
             await c.say(f"/{k}")
-        self.assertEqual(len([x for x in c.log if x["kind"] == "photo"]), 5)  # 5 free, the 6th hit the paywall
+        self.assertEqual(len([x for x in c.log if x["kind"] == "photo"]), 5)  # 5 free cards, then the 6th and the kit hit the paywall
         self.assertEqual(c.last()["kind"], "text")

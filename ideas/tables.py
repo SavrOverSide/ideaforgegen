@@ -104,10 +104,25 @@ def place() -> dict:
         (("Тайна", "Secret"), pick(K["PLACE_SECRET"])), (("Опасность", "Danger"), pick(K["PLACE_DANGER"]))]}
 
 
-GENERATORS = {"game": game, "npc": npc, "faction": faction, "item": item, "quest": quest, "place": place}
-ICONS = {"game": "🎮", "npc": "🧙", "faction": "⚔️", "item": "🗡️", "quest": "📜", "place": "🏰"}
+def campaign() -> dict:
+    """A linked kit: a place, the faction that holds it, its leader, a quest and an artifact."""
+    pl, f, n, q, it = place(), faction(), npc(), quest(), item()
+    leader = f["rows"][2][1][0]  # the faction's leader is the character of the kit
+    role, secret = n["rows"][0][1], n["rows"][2][1]
+    return {"kind": "set", "name": pl["name"], "rows": [
+        (("Локация", "Location"), pl["rows"][0][1]),
+        (("Фракция", "Faction"), (f["name"], f["name_en"])),
+        (("Лидер", "Leader"), (f"{leader}, {role[0]}", f"{leader}, {role[1]}")),
+        (("Тайна лидера", "Leader's secret"), secret),
+        (("Квест", "Quest"), q["rows"][1][1]),
+        (("Артефакт", "Artifact"), it["rows"][0][1])]}
+
+
+GENERATORS = {"game": game, "npc": npc, "faction": faction, "item": item, "quest": quest, "place": place, "set": campaign}
+ICONS = {"game": "🎮", "npc": "🧙", "faction": "⚔️", "item": "🗡️", "quest": "📜", "place": "🏰", "set": "🗺️"}
 KIND_TITLE = {"game": ("ИДЕЯ ИГРЫ", "GAME IDEA"), "npc": ("ПЕРСОНАЖ", "CHARACTER"), "faction": ("ФРАКЦИЯ", "FACTION"),
-              "item": ("АРТЕФАКТ", "ARTIFACT"), "quest": ("КВЕСТ", "QUEST"), "place": ("ЛОКАЦИЯ", "LOCATION")}
+              "item": ("АРТЕФАКТ", "ARTIFACT"), "quest": ("КВЕСТ", "QUEST"), "place": ("ЛОКАЦИЯ", "LOCATION"),
+              "set": ("НАБОР КАМПАНИИ", "CAMPAIGN KIT")}
 
 
 def make(kind: str, seed: int = None):

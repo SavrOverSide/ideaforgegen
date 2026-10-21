@@ -19,9 +19,11 @@ THEMES = {
     "item": ((20, 10, 34), (38, 14, 56), (255, 214, 120), (200, 80, 255), (255, 140, 60)),
     "quest": ((26, 18, 8), (50, 32, 12), (255, 226, 160), (220, 130, 40), (140, 60, 30)),
     "place": ((6, 16, 30), (10, 30, 52), (140, 255, 214), (40, 120, 255), (30, 200, 170)),
+    "set": ((18, 8, 30), (36, 12, 40), (255, 150, 190), (255, 90, 120), (120, 70, 255)),
 }
 TITLES = {"game": "ИДЕЯ ИГРЫ · GAME IDEA", "npc": "ПЕРСОНАЖ · CHARACTER", "faction": "ФРАКЦИЯ · FACTION",
-          "item": "АРТЕФАКТ · ARTIFACT", "quest": "КВЕСТ · QUEST", "place": "ЛОКАЦИЯ · LOCATION"}
+          "item": "АРТЕФАКТ · ARTIFACT", "quest": "КВЕСТ · QUEST", "place": "ЛОКАЦИЯ · LOCATION",
+          "set": "НАБОР КАМПАНИИ · CAMPAIGN KIT"}
 
 
 def font(name, size):
@@ -118,9 +120,10 @@ def render(idea: dict, bot_username: str = "", handle: str = "@ideaforges") -> b
     white = (255, 255, 255, 255)
 
     # sigil with a soft glow, centred in the upper half
-    s = sigil(idea.get("name_en") or idea["name"], accent, rnd)
+    compact = len(idea["rows"]) >= 6  # long cards (campaign kit): smaller emblem, everything shifted up
+    s = sigil(idea.get("name_en") or idea["name"], accent, rnd, size=300 if compact else 400)
     glow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    glow.paste(s, ((W - s.width) // 2, 150), s)
+    glow.paste(s, ((W - s.width) // 2, 140 if compact else 150), s)
     img = over(img, glow.filter(ImageFilter.GaussianBlur(30)))
     img = over(img, glow.filter(ImageFilter.GaussianBlur(8)))
     img = over(img, glow)
@@ -140,7 +143,7 @@ def render(idea: dict, bot_username: str = "", handle: str = "@ideaforges") -> b
     size = 84
     while size > 44 and d.textlength(title, font=font("ExtraBold", size)) > W - 2 * PAD:
         size -= 4
-    y = 612
+    y = 500 if compact else 612
     d.text((W // 2, y), title, font=font("ExtraBold", size), fill=white, anchor="mm")
     if "name_en" in idea:
         d.text((W // 2, y + size // 2 + 30), idea["name_en"], font=font("Medium", 32), fill=(255, 255, 255, 150), anchor="mm")
