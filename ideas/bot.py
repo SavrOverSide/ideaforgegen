@@ -39,6 +39,7 @@ T = {
                   "set": "Набор для кампании (3 генерации)"},
         "again": "🔄 Ещё", "save": "❤️ В избранное", "share": "📤 Поделиться", "saved_ok": "Сохранено ❤️",
         "saved_dup": "Уже в избранном", "saved_full": "В избранном {n} — это лимит бесплатного тарифа. Премиум снимает его.",
+        "first_gift": "🎁 Для знакомства держи набор для целой кампании. Он не тратит твои бесплатные генерации.",
         "streak": "🔥 Серия: {n} дн.", "streak_reward": "🎁 Серия {n} дней! Бонус: +{b} генерации.",
         "limit": "На сегодня бесплатные генерации закончились.\n\n👥 Пригласи друга — вы оба получите +{bonus}.\n⭐ Или возьми безлимит.",
         "btn_invite": "👥 Пригласить друга", "buy_pack": "+50 генераций · {p} ⭐", "buy_premium": "Безлимит 30 дней · {p} ⭐",
@@ -67,6 +68,7 @@ T = {
                   "set": "Campaign kit (3 generations)"},
         "again": "🔄 Again", "save": "❤️ Save", "share": "📤 Share", "saved_ok": "Saved ❤️",
         "saved_dup": "Already saved", "saved_full": "You have {n} saved — the free limit. Premium removes it.",
+        "first_gift": "🎁 To get started, here is a kit for a whole campaign. It does not use up your free generations.",
         "streak": "🔥 Streak: {n} days", "streak_reward": "🎁 {n}-day streak! Bonus: +{b} generations.",
         "limit": "You've used today's free generations.\n\n👥 Invite a friend — you both get +{bonus}.\n⭐ Or go unlimited.",
         "btn_invite": "👥 Invite a friend", "buy_pack": "+50 generations · {p} ⭐", "buy_premium": "Unlimited 30 days · {p} ⭐",
@@ -136,9 +138,9 @@ async def idea_keyboard(user, bot, kind: str, seed: int) -> InlineKeyboardMarkup
               *kinds_rows(user))
 
 
-async def send_idea(m: Message, user, kind: str) -> None:
-    """Spends one generation (or shows the shop) and sends the card."""
-    if not store.take_n(user.id, FREE_PER_DAY, COST.get(kind, 1)):
+async def send_idea(m: Message, user, kind: str, gift: bool = False) -> None:
+    """Spends one generation (or shows the shop) and sends the card. A gift card costs nothing."""
+    if not gift and not store.take_n(user.id, FREE_PER_DAY, COST.get(kind, 1)):
         return await m.answer(tr(user, "limit", bonus=INVITER_BONUS), reply_markup=shop(user))
     idea = make(kind)
     me = await m.bot.me()
@@ -175,6 +177,9 @@ async def start(m: Message):
         store.set_sub(user.id, True)
         return await m.answer(tr(user, "sub_on"), reply_markup=menu(user))
     await m.answer(tr(user, "welcome", free=FREE_PER_DAY, bonus=INVITER_BONUS), parse_mode="HTML", reply_markup=menu(user))
+    if created:  # show the product right away: a whole campaign kit, on the house
+        await m.answer(tr(user, "first_gift"))
+        await send_idea(m, user, "set", gift=True)
 
 
 @router.message(Command("help"))

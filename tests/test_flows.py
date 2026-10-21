@@ -175,6 +175,20 @@ class StreakReward(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(store.credits(9601), ib.STREAK_BONUS)
 
 
+class FirstRun(unittest.IsolatedAsyncioTestCase):
+    async def test_new_user_gets_free_kit_returning_user_does_not(self):
+        c = chat(9701)
+        await c.say("/start")
+        photos = [x for x in c.log if x["kind"] == "photo"]
+        self.assertEqual(len(photos), 1)
+        self.assertIn("🗺️", photos[0]["caption"])
+        self.assertEqual(store.free_left(9701, ib.FREE_PER_DAY), ib.FREE_PER_DAY)   # the gift cost nothing
+        n = len(c.log)
+        await c.say("/start")
+        self.assertEqual(len(c.log), n + 1)
+        assert_buttons_routable(self, c)
+
+
 class Kit(unittest.IsolatedAsyncioTestCase):
     async def test_kit_costs_three_and_is_all_or_nothing(self):
         c = chat(9101)
