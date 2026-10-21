@@ -51,6 +51,26 @@ async def post_idea(bot: Bot) -> None:
     logging.info("daily DM: %s dropped", len(dead))
 
 
+def clip(text: str, n: int = 100) -> str:
+    return text if len(text) <= n else text[: n - 1].rsplit(" ", 1)[0] + "…"
+
+
+async def post_poll(bot: Bot) -> None:
+    """Midday vote in the channel: three quests, which one would you take? Cheap to answer, so people do."""
+    channel = env("CHANNEL")
+    if not channel:
+        return
+    me = await bot.get_me()
+    quests = [make("quest") for _ in range(3)]
+    options = [clip(q["rows"][1][1][0]) for q in quests]  # the task line, Russian
+    while len(set(options)) < 3:  # three different tasks, please
+        quests = [make("quest") for _ in range(3)]
+        options = [clip(q["rows"][1][1][0]) for q in quests]
+    kb = InlineKeyboardMarkup(inline_keyboard=[[InlineKeyboardButton(text="🎲 Сгенерировать свой квест", url=f"https://t.me/{me.username}")]])
+    await bot.send_poll(channel, question="Три квеста на выбор. За какой возьмёшься?", options=[o[0].upper() + o[1:] for o in options],
+                        is_anonymous=True, reply_markup=kb)
+
+
 async def main() -> None:
     logging.basicConfig(level=logging.INFO)
     bot = Bot(env("BOT_TOKEN"))
@@ -60,6 +80,7 @@ async def main() -> None:
     await asyncio.gather(
         dp.start_polling(bot),
         every_day(env("POST_TIME", "19:00"), lambda: post_idea(bot)),
+        every_day(env("POLL_TIME", "13:00"), lambda: post_poll(bot)),
     )
 
 

@@ -242,6 +242,28 @@ class Deck(unittest.IsolatedAsyncioTestCase):
         assert_buttons_routable(self, c)
 
 
+class Poll(unittest.IsolatedAsyncioTestCase):
+    async def test_quest_poll_valid_for_telegram(self):
+        import run
+        run.env = lambda name, default="": {"CHANNEL": "@c"}.get(name, default)
+        for _ in range(60):                   # random content: try many draws
+            bot = Bot("x")
+            await run.post_poll(bot)
+            p = bot.sent[0]
+            self.assertEqual(len(p["options"]), 3)
+            self.assertEqual(len(set(p["options"])), 3)
+            self.assertTrue(all(1 <= len(o) <= 100 for o in p["options"]))
+            self.assertLessEqual(len(p["question"]), 300)
+            self.assertTrue(p["is_anonymous"])
+
+    async def test_no_channel_no_poll(self):
+        import run
+        run.env = lambda name, default="": ""
+        bot = Bot("x")
+        await run.post_poll(bot)
+        self.assertEqual(bot.sent, [])
+
+
 class DailyPost(unittest.IsolatedAsyncioTestCase):
     async def test_post_to_channel_and_dms(self):
         import run
