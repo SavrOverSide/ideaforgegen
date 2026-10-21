@@ -4,6 +4,7 @@ Growth: invite links (+credits both sides), daily streak, saved ideas, daily DM 
 Money: Telegram Stars (generation packs, 30-day unlimited).
 """
 import asyncio
+import json
 import logging
 
 from aiogram import F, Router
@@ -264,7 +265,8 @@ async def save(c: CallbackQuery):
     if not store.is_premium(user.id) and store.count_saved(user.id) >= FREE_SAVED:
         await c.message.answer(tr(user, "saved_full", n=FREE_SAVED), reply_markup=shop(user))
         return await c.answer()
-    store.save_item(user.id, key, key)
+    # keep the idea itself, so saved ideas stay the same even after the tables grow
+    store.save_item(user.id, key, json.dumps(make(kind, int(seed)), ensure_ascii=False))
     await c.answer(tr(user, "saved_ok"))
 
 
@@ -273,15 +275,25 @@ async def saved_cmd(m: Message):
     await show_saved(m, m.from_user)
 
 
+def saved_idea(key: str, payload: str) -> dict:
+    try:
+        idea = json.loads(payload)
+        if isinstance(idea, dict) and "rows" in idea:
+            return idea
+    except ValueError:
+        pass
+    kind, seed = key.split(":")  # older saves kept only the seed
+    return make(kind, int(seed))
+
+
 async def show_saved(m: Message, user) -> None:
     rows = store.list_saved(user.id, 20)
     if not rows:
         return await m.answer(tr(user, "saved_empty"), reply_markup=menu(user))
     lg = lang(user)
     parts = [tr(user, "saved_title", n=store.count_saved(user.id))]
-    for key, _ in rows:
-        kind, seed = key.split(":")
-        parts.append(text(make(kind, int(seed)), lg))
+    for key, payload in rows:
+        parts.append(text(saved_idea(key, payload), lg))
     out, size = [], 0
     for p in parts:  # Telegram's limit is 4096 characters per message
         if size + len(p) > 3800:

@@ -103,6 +103,19 @@ class IdeaForgeFlows(unittest.IsolatedAsyncioTestCase):
         await c.say("/saved")
         self.assertIn(shown, c.last()["text"])  # the same idea comes back, regenerated from its seed
 
+    async def test_saved_idea_survives_table_changes(self):
+        from ideas import tables
+        c = chat(3010)
+        await c.press("sv:item:42")
+        await c.say("/saved")
+        before = c.last()["text"]
+        tables.K["ITEM_TYPE"].insert(0, ("новая вещь", "a new thing"))   # tables grow after the save
+        try:
+            await c.say("/saved")
+            self.assertEqual(c.last()["text"], before)
+        finally:
+            tables.K["ITEM_TYPE"].pop(0)
+
     async def test_saved_limit_and_premium(self):
         c = chat(3002)
         for s in range(ib.FREE_SAVED):
