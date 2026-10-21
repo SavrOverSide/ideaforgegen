@@ -22,6 +22,7 @@ FREE_PER_DAY = 5
 FREE_SAVED = 5
 INVITER_BONUS = 5
 INVITEE_BONUS = 5
+STREAK_EVERY, STREAK_BONUS = 7, 3   # every 7th day in a row: +3 generations
 COST = {"set": 3}  # a campaign kit is five cards in one
 PRODUCTS = {"pack_50": 25, "premium_30": 149, "deck_10": 49}  # payload -> Stars
 
@@ -38,7 +39,7 @@ T = {
                   "set": "Набор для кампании (3 генерации)"},
         "again": "🔄 Ещё", "save": "❤️ В избранное", "share": "📤 Поделиться", "saved_ok": "Сохранено ❤️",
         "saved_dup": "Уже в избранном", "saved_full": "В избранном {n} — это лимит бесплатного тарифа. Премиум снимает его.",
-        "streak": "🔥 Серия: {n} дн.",
+        "streak": "🔥 Серия: {n} дн.", "streak_reward": "🎁 Серия {n} дней! Бонус: +{b} генерации.",
         "limit": "На сегодня бесплатные генерации закончились.\n\n👥 Пригласи друга — вы оба получите +{bonus}.\n⭐ Или возьми безлимит.",
         "btn_invite": "👥 Пригласить друга", "buy_pack": "+50 генераций · {p} ⭐", "buy_premium": "Безлимит 30 дней · {p} ⭐",
         "pack_title": "50 генераций", "pack_desc": "50 дополнительных генераций без срока",
@@ -66,7 +67,7 @@ T = {
                   "set": "Campaign kit (3 generations)"},
         "again": "🔄 Again", "save": "❤️ Save", "share": "📤 Share", "saved_ok": "Saved ❤️",
         "saved_dup": "Already saved", "saved_full": "You have {n} saved — the free limit. Premium removes it.",
-        "streak": "🔥 Streak: {n} days",
+        "streak": "🔥 Streak: {n} days", "streak_reward": "🎁 {n}-day streak! Bonus: +{b} generations.",
         "limit": "You've used today's free generations.\n\n👥 Invite a friend — you both get +{bonus}.\n⭐ Or go unlimited.",
         "btn_invite": "👥 Invite a friend", "buy_pack": "+50 generations · {p} ⭐", "buy_premium": "Unlimited 30 days · {p} ⭐",
         "pack_title": "50 generations", "pack_desc": "50 extra generations, no expiry",
@@ -146,6 +147,9 @@ async def send_idea(m: Message, user, kind: str) -> None:
     streak, _best, grew = store.streak_hit(user.id)
     if streak >= 2:
         caption += "\n\n" + tr(user, "streak", n=streak)
+    if grew and streak % STREAK_EVERY == 0:
+        store.add_credits(user.id, STREAK_BONUS)
+        caption += "\n" + tr(user, "streak_reward", n=streak, b=STREAK_BONUS)
     markup = await idea_keyboard(user, m.bot, kind, idea["seed"])
     await m.answer_photo(BufferedInputFile(data, filename=f"{kind}.jpg"), caption=caption, parse_mode="HTML", reply_markup=markup)
 

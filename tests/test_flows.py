@@ -158,6 +158,23 @@ class IdeaForgeFlows(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(set(ib.T["ru"]["kinds"]), set(GENERATORS))
 
 
+class StreakReward(unittest.IsolatedAsyncioTestCase):
+    async def test_seventh_day_gives_bonus_generations(self):
+        from datetime import timedelta
+        from common.db import today
+        c = chat(9601)
+        for back in range(6, 0, -1):
+            store.conn.execute("INSERT OR REPLACE INTO streaks VALUES (?, ?, ?, ?)",
+                               (9601, (today() - timedelta(days=back)).isoformat(), 7 - back, 7 - back))
+        store.conn.commit()
+        await c.press("g:game")
+        self.assertIn("🎁", c.last()["caption"])
+        self.assertEqual(store.credits(9601), ib.STREAK_BONUS)
+        await c.press("g:game")                                  # same day again: no second bonus
+        self.assertNotIn("🎁", c.last()["caption"])
+        self.assertEqual(store.credits(9601), ib.STREAK_BONUS)
+
+
 class Kit(unittest.IsolatedAsyncioTestCase):
     async def test_kit_costs_three_and_is_all_or_nothing(self):
         c = chat(9101)
