@@ -84,7 +84,7 @@ def page(lang, path, title, desc, body, alt_path):
 <header><div class="wrap"><a class="brand" href="{depth}{'' if lang == 'ru' else 'en/'}">IdeaForge</a>
 <nav><a href="{depth}{alt_path}">{'English' if lang == 'ru' else 'Русский'}</a> <a class="btn" href="{BOT}">{'Генерировать в Telegram' if lang == 'ru' else 'Generate in Telegram'}</a></nav></div></header>
 <main class="wrap">{body}</main>
-<footer class="wrap">{'IdeaForge: генератор идей для игр и НРИ. Каждый вечер новая идея в канале' if lang == 'ru' else 'IdeaForge: an idea generator for games and tabletop RPGs. A new idea every evening in'} <a href="https://t.me/ideaforges">@ideaforges</a>.</footer>
+<footer class="wrap">{'IdeaForge: генератор идей для игр и НРИ. Каждый вечер новая идея в канале' if lang == 'ru' else 'IdeaForge: an idea generator for games and tabletop RPGs. A new idea every evening in'} <a href="https://t.me/ideaforges">@ideaforges</a>. {'Ещё наш проект' if lang == 'ru' else 'Also by us'}: <a href="https://savroverside.github.io/wordlore/">{'истории происхождения слов' if lang == 'ru' else 'the stories behind words (in Russian)'}</a>.</footer>
 </body></html>
 """
 

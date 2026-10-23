@@ -1,3 +1,5 @@
+**Сайт:** https://savroverside.github.io/ideaforgegen/ · **Бот:** https://t.me/ideaforge_gen_bot · **Канал:** https://t.me/ideaforges
+
 # Lore Forge
 
 Telegram-бот, который генерирует идеи игр, персонажей и фракции для геймдева и НРИ (RU/EN). Каждый вечер публикует идею в [@ideaforges](https://t.me/ideaforges).
