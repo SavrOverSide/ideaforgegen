@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Онлайн-запись в Telegram для салонов и барбершопов</title>
+<meta name="description" content="Бот онлайн-записи в Telegram: клиент сам выбирает услугу, мастера и время, вам приходит запись с телефоном, клиенту напоминание за 2 часа. Запуск за 1 день.">
+<meta property="og:title" content="Онлайн-запись в Telegram для салонов и барбершопов">
+<meta property="og:description" content="Клиенты записываются сами, пока вы работаете. Попробуйте демо прямо на странице.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Unbounded:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#12161C;--muted:#3B4450;--soft:#5B6673;--ground:#F3F5F8;--line:#E3E8EE;--accent:#0F5E94;--accent-dark:#0A4670;--chat:#DCE6EF;--mine:#D6F2C9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font:17px/1.55 Manrope,system-ui,sans-serif}
+a{color:var(--accent)}a:hover{color:var(--accent-dark)}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+h1,h2,.display{font-family:Unbounded,Manrope,sans-serif;font-weight:700;letter-spacing:-0.02em}
+h1{margin:0;font-size:clamp(32px,4.6vw,56px);line-height:1.08}
+h2{margin:0;font-size:clamp(26px,3vw,36px);line-height:1.15}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 24px;border-radius:14px;background:var(--accent);color:#fff;font-weight:800;text-decoration:none;border:0;font:inherit;font-weight:800;cursor:pointer}
+.btn:hover{background:var(--accent-dark);color:#fff}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid #D5DCE4}
+header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-top:20px;padding-bottom:20px}
+.logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:18px}
+.logo i{width:40px;height:40px;border-radius:12px;background:var(--ink);display:flex;align-items:center;justify-content:center}
+.hero{display:flex;flex-wrap:wrap;gap:56px;align-items:center;padding-top:32px;padding-bottom:72px}
+.hero .copy{flex:999 1 500px;min-width:0;display:flex;flex-direction:column;gap:22px}
+.pill{align-self:flex-start;padding:6px 12px;border-radius:999px;background:#E3EDF7;color:var(--accent);font-weight:700;font-size:13px}
+.lead{margin:0;font-size:19px;color:var(--muted);max-width:560px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.ticks{display:flex;flex-wrap:wrap;gap:20px;color:var(--muted);font-size:15px}
+.ticks span::before{content:"✓ ";color:var(--accent);font-weight:800}
+/* phone demo */
+.phone-col{flex:1 1 340px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.phone{width:350px;max-width:100%;border-radius:36px;background:var(--ink);padding:12px;box-shadow:0 30px 60px -30px rgba(18,22,28,.45)}
+.screen{border-radius:26px;background:var(--chat);overflow:hidden;display:flex;flex-direction:column;height:600px}
+.bar{background:#fff;padding:14px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line)}
+.ava{width:36px;height:36px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
+.bar b{display:block;font-size:15px}.bar small{color:var(--soft);font-size:12px}
+.log{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;font-size:14px;line-height:1.4}
+.msg{max-width:88%;background:#fff;border-radius:14px 14px 14px 4px;padding:10px 12px;align-self:flex-start;white-space:pre-line}
+.msg.me{align-self:flex-end;background:var(--mine);border-radius:14px 14px 4px 14px}
+.msg.admin{background:#FFF4D6}
+.kb{display:grid;gap:6px;align-self:stretch}
+.kb button{min-height:40px;border:0;border-radius:8px;background:rgba(255,255,255,.8);color:var(--accent);font:inherit;font-weight:700;cursor:pointer;padding:6px 8px}
+.kb button:hover{background:#fff}
+.kb button:disabled{opacity:.45;cursor:default}
+.hint{color:var(--soft);font-size:14px;text-align:center}
+section.white{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.block{padding-top:72px;padding-bottom:72px;display:flex;flex-direction:column;gap:32px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.card{border-radius:18px;background:var(--ground);padding:24px;display:flex;flex-direction:column;gap:8px}
+.card.bordered{background:#fff;border:1px solid var(--line)}
+.card b{font-size:18px}
+.num{font-family:Unbounded,sans-serif;font-size:28px;color:var(--accent);font-weight:700}
+.dark{background:var(--ink);color:#fff}
+.dark .card{background:#1E242C}.dark p,.dark .muted{color:#C9D1DA}
+.price{font-family:Unbounded,sans-serif;font-size:34px;font-weight:700}
+.badge{align-self:flex-start;padding:6px 12px;border-radius:999px;background:#F5B83D;color:var(--ink);font-weight:800;font-size:13px}
+details{background:#fff;border:1px solid var(--line);border-radius:16px;padding:0 20px}
+summary{min-height:56px;display:flex;align-items:center;font-weight:800;cursor:pointer}
+details p{margin:0 0 18px;color:var(--muted)}
+.final{border-radius:28px;background:var(--accent);color:#fff;padding:44px 32px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;margin-bottom:72px}
+.final .btn{background:#fff;color:var(--accent)}
+footer{color:var(--soft);font-size:14px;padding-bottom:40px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="logo"><i><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4M9 15l2 2 4-4"/></svg></i>Запись в Telegram</div>
+  <a class="btn" href="https://t.me/OverSide88">Написать в Telegram</a>
+</div></header>
+
+<main>
+<div class="wrap hero">
+  <div class="copy">
+    <div class="pill">Для салонов, барбершопов, клиник и студий</div>
+    <h1>Клиенты записываются сами, пока вы работаете</h1>
+    <p class="lead">Бот в Telegram принимает записи круглосуточно: клиент выбирает услугу, мастера и свободное время за полминуты. Вам сразу приходит запись с телефоном, клиенту за 2 часа приходит напоминание.</p>
+    <div class="row"><a class="btn" href="https://t.me/OverSide88">Обсудить запуск</a><a class="btn ghost" href="#demo">Попробовать демо</a></div>
+    <div class="ticks"><span>Запуск за 1 день</span><span>Без приложений и сайтов</span><span>Первые 2 недели бесплатно</span></div>
+  </div>
+  <div class="phone-col" id="demo">
+    <div class="phone" role="region" aria-label="Демо бота записи">
+      <div class="screen">
+        <div class="bar"><div class="ava">Б</div><div><b>Барбершоп «Борода»</b><small>демо · бот</small></div></div>
+        <div class="log" id="log" aria-live="polite"></div>
+      </div>
+    </div>
+    <div class="hint">Это демо: нажимайте кнопки, как клиент. <button class="btn ghost" style="min-height:36px;padding:0 12px;font-size:14px" onclick="startDemo()">Сначала</button></div>
+  </div>
+</div>
+
+<section class="white"><div class="wrap block">
+  <div><h2>Клиенту: 4 нажатия вместо переписки</h2><p class="lead" style="margin-top:12px">Бот показывает только реально свободное время с учётом длительности услуги, графика и занятости мастеров.</p></div>
+  <div class="grid">
+    <div class="card"><span class="num">1</span><b>Услуга</b><span class="muted">Список услуг с ценой и длительностью.</span></div>
+    <div class="card"><span class="num">2</span><b>Мастер</b><span class="muted">Конкретный мастер или «любой свободный».</span></div>
+    <div class="card"><span class="num">3</span><b>День</b><span class="muted">Ближайшие рабочие дни, выходные скрыты.</span></div>
+    <div class="card"><span class="num">4</span><b>Время</b><span class="muted">Только свободные окна. Телефон одной кнопкой.</span></div>
+  </div>
+</div></section>
+
+<div class="wrap block">
+  <div><h2>Вам: всё под контролем в одном чате</h2><p class="lead" style="margin-top:12px">Не нужно учиться новой программе. Всё приходит в Telegram, которым вы и так пользуетесь.</p></div>
+  <div class="grid">
+    <div class="card bordered"><b>Каждая запись сразу у вас</b><span class="muted">Услуга, мастер, время, имя и телефон. Отменить можно одной кнопкой, клиент получит вежливое сообщение.</span></div>
+    <div class="card bordered"><b>Меньше неявок</b><span class="muted">За 2 часа клиенту приходит напоминание с кнопками «Приду» и «Отменить». Отменённое окно сразу освобождается.</span></div>
+    <div class="card bordered"><b>Расписание командой</b><span class="muted">/today, /tomorrow, /week показывают все записи, /stats показывает записи и отмены за неделю.</span></div>
+    <div class="card bordered"><b>Записи по телефону и перерывы</b><span class="muted">Одна команда занимает время у нужного мастера, и бот больше его не предлагает.</span></div>
+    <div class="card bordered"><b>Праздники и отпуск</b><span class="muted">Закройте день одной командой. Бот предупредит, если на этот день уже есть записи.</span></div>
+    <div class="card bordered"><b>Под ваш бизнес</b><span class="muted">Ваше название и логотип, услуги и цены, мастера, график, адрес и ссылка на карту.</span></div>
+  </div>
+</div>
+
+<section class="dark" id="prices"><div class="wrap block">
+  <div><h2>Цены</h2><p style="margin-top:12px">Сейчас набираю первых клиентов: им запуск бесплатно и первые 2 недели бесплатно. Взамен прошу отзыв.</p></div>
+  <div class="grid">
+    <div class="card"><span class="muted">Запуск</span><span class="price">49 000 ₸</span><p>Настройка под ваш бизнес: услуги, мастера, график, логотип. Покажу администратору, как пользоваться.</p><span class="badge">Первым трём клиентам бесплатно</span></div>
+    <div class="card" style="background:#fff;color:var(--ink)"><span style="color:var(--muted)">Каждый месяц</span><span class="price">9 900 ₸</span><span style="color:var(--muted)">Сервер, поддержка, правки цен и графика, обновления. Первые 2 недели бесплатно, без договора на год.</span></div>
+    <div class="card"><span class="muted">Доработки</span><span class="price">от 30 000 ₸</span><p>Онлайн-оплата, несколько филиалов, выгрузка записей в Google Таблицу и другое по запросу.</p></div>
+  </div>
+</div></section>
+
+<div class="wrap block" style="max-width:860px">
+  <h2>Частые вопросы</h2>
+  <details><summary>Нужно ли клиентам что-то устанавливать?</summary><p>Нет. Достаточно Telegram. Ссылку на бота ставят в шапку Instagram, в 2ГИС и на визитку.</p></details>
+  <details><summary>У нас уже есть WhatsApp. Зачем бот?</summary><p>Бот не заменяет WhatsApp. Он снимает с администратора рутину «есть ли окно на завтра» и принимает записи ночью и в выходные.</p></details>
+  <details><summary>Что если клиент записался по телефону?</summary><p>Администратор одной командой занимает это время у нужного мастера, и бот больше не предлагает его другим.</p></details>
+  <details><summary>Можно поменять цены, услуги или график?</summary><p>Да, в любой момент: напишите мне, и я обновлю в тот же день. Это входит в ежемесячную поддержку.</p></details>
+  <details><summary>Кому подойдёт?</summary><p>Барбершопам, салонам маникюра и бровей, массажистам, частным стоматологиям, автомойкам, репетиторам и студиям. Если ваши клиенты не пользуются Telegram, честно скажу, что бот не подойдёт.</p></details>
+</div>
+
+<div class="wrap"><div class="final">
+  <div style="flex:999 1 420px"><div class="display" style="font-size:clamp(24px,2.8vw,32px);line-height:1.2">Настрою под ваши услуги и график за 1 день</div><p style="margin:10px 0 0;color:#E3EDF7">Напишите, чем вы занимаетесь и сколько у вас мастеров. Отвечу в течение дня.</p></div>
+  <a class="btn" style="flex:1 1 220px" href="https://t.me/OverSide88">Написать @OverSide88</a>
+</div></div>
+</main>
+<footer class="wrap">Онлайн-запись в Telegram · Казахстан · связь: <a href="https://t.me/OverSide88">t.me/OverSide88</a></footer>
+
+<script>
+// A scripted copy of the real bot's booking flow (same steps and wording), so a business owner can try it here.
+var SERVICES = [["Мужская стрижка", "5 000 ₸", 45], ["Оформление бороды", "3 500 ₸", 30], ["Стрижка + борода", "8 000 ₸", 75]];
+var MASTERS = ["Арман", "Данияр", "Любой свободный"];
+var log = document.getElementById("log");
+var pick = {};
+
+function say(text, cls) {
+  var d = document.createElement("div");
+  d.className = "msg" + (cls ? " " + cls : "");
+  d.textContent = text;
+  log.appendChild(d);
+  log.scrollTop = log.scrollHeight;
+}
+function keys(options, cols, onPick) {
+  var kb = document.createElement("div");
+  kb.className = "kb";
+  kb.style.gridTemplateColumns = "repeat(" + cols + ", minmax(0, 1fr))";
+  options.forEach(function (label, i) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = label;
+    b.onclick = function () {
+      kb.querySelectorAll("button").forEach(function (x) { x.disabled = true; });
+      say(label, "me");
+      setTimeout(function () { onPick(i, label); }, 350);
+    };
+    kb.appendChild(b);
+  });
+  log.appendChild(kb);
+  log.scrollTop = log.scrollHeight;
+}
+function days() {
+  var out = [], d = new Date(), names = ["вс", "пн", "вт", "ср", "чт", "пт", "сб"];
+  for (var i = 1; out.length < 3; i++) {
+    var x = new Date(d.getTime() + i * 864e5);
+    if (x.getDay() === 0) continue; // Sunday is closed
+    out.push((i === 1 ? "Завтра" : names[x.getDay()]) + " " + ("0" + x.getDate()).slice(-2) + "." + ("0" + (x.getMonth() + 1)).slice(-2));
+  }
+  return out;
+}
+function startDemo() {
+  log.innerHTML = "";
+  pick = {};
+  say("Барбершоп «Борода»\nМужские стрижки, бритьё и уход за бородой. Запишитесь на удобное время прямо здесь.");
+  keys(["Записаться", "Услуги и цены"], 2, function (i) {
+    if (i === 1) {
+      say(SERVICES.map(function (s) { return "• " + s[0] + ": " + s[1] + " (" + s[2] + " мин)"; }).join("\n"));
+    }
+    chooseService();
+  });
+}
+function chooseService() {
+  say("Что делаем?");
+  keys(SERVICES.map(function (s) { return s[0] + " · " + s[1]; }), 1, function (i) { pick.s = SERVICES[i]; chooseMaster(); });
+}
+function chooseMaster() {
+  say(pick.s[0] + ". К кому записать?");
+  keys(MASTERS, 1, function (i) { pick.m = i === 2 ? "Данияр" : MASTERS[i]; chooseDay(); });
+}
+function chooseDay() {
+  say("Выберите день:");
+  keys(days(), 3, function (i, label) { pick.d = label; chooseTime(); });
+}
+function chooseTime() {
+  say("Выберите время:");
+  keys(["10:00", "11:30", "13:00", "15:30", "16:00", "17:30", "18:00", "19:00"], 4, function (i, label) { pick.t = label; askPhone(); });
+}
+function askPhone() {
+  say("Оставьте номер телефона, чтобы мы могли связаться, если что-то изменится:");
+  keys(["Отправить мой номер"], 1, function () {
+    say("Проверьте запись:\n\n" + pick.s[0] + " · " + pick.s[1] + "\nМастер: " + pick.m + "\n" + pick.d + ", " + pick.t + "\n+7 700 123 45 67");
+    keys(["Подтвердить", "Изменить"], 2, function (i) {
+      if (i === 1) return chooseService();
+      say("Вы записаны!\n\n" + pick.s[0] + " · мастер " + pick.m + "\n" + pick.d + ", " + pick.t + "\nАлматы, ул. Панфилова, 100\n\nНапомним заранее.");
+      setTimeout(function () {
+        say("Так в это же время выглядит сообщение владельцу:\n\nНовая запись №27\n" + pick.s[0] + " · мастер " + pick.m + "\n" + pick.d + ", " + pick.t + "\nАйдос · +7 700 123 45 67", "admin");
+        setTimeout(function () {
+          say("А за 2 часа клиенту придёт:\n\nНапоминаем о записи: " + pick.d + ", " + pick.t + ", ул. Панфилова, 100");
+          keys(["Приду", "Отменить"], 2, function () { say("Готово. Хотите такого бота для своего бизнеса? Напишите @OverSide88."); });
+        }, 900);
+      }, 700);
+    });
+  });
+}
+startDemo();
+</script>
+</body>
+</html>
